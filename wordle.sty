@@ -60,7 +60,7 @@
     size           .tl_set:N   = \l__wordle_size_dim,
     text           .tl_set:N   = \l__wordle_text_tl,
     tikz           .tl_set:N   = \l__wordle_tikz_tl,
-    unmarked       .tl_set:N   = \l__wordle_unmarked_tl,
+    empty          .tl_set:N   = \l__wordle_empty_tl,
     wrong          .tl_set:N   = \l__wordle_wrong_tl,
     rows           .int_set:N  = \l__wordle_rows_int,
     case~sensitive .bool_set:N = \l__wordle_case_sensitive_bool,
@@ -95,7 +95,7 @@
     strict         = false,
     text           = white,
     tikz           = ,
-    unmarked       = white,
+    empty          = OldLace,
     wrong          = Gray,
 }
 
@@ -133,16 +133,16 @@
       \l__wordle_shape_tl,
       thick,
     },
-    border/.default   = \l__wordle_border_tl,
-    border/.code      = {\tl_set:Nn \l__wordle_border_tl {#1}},
-    correct/.style    = {boxed~letter=#1},
-    correct/.default  = \l__wordle_correct_tl,
-    placed/.style     = {boxed~letter=#1},
-    placed/.default   = \l__wordle_placed_tl,
-    wrong/.style      = {boxed~letter=#1},
-    wrong/.default    = \l__wordle_wrong_tl,
-    unmarked/.style   = {boxed~letter=#1},
-    unmarked/.default = \l__wordle_unmarked_tl,
+    border/.default  = \l__wordle_border_tl,
+    border/.code     = {\tl_set:Nn \l__wordle_border_tl {#1}},
+    correct/.style   = {boxed~letter=#1},
+    correct/.default = \l__wordle_correct_tl,
+    placed/.style    = {boxed~letter=#1},
+    placed/.default  = \l__wordle_placed_tl,
+    wrong/.style     = {boxed~letter=#1},
+    wrong/.default   = \l__wordle_wrong_tl,
+    empty/.style     = {boxed~letter=#1},
+    empty/.default   = \l__wordle_empty_tl,
 }
 
 % processing of the wordle letters
@@ -158,7 +158,7 @@
 {
   \tl_set:No \l_tmpa_tl
   {
-    \l__wordle_name_tl\int_use:N\l__wordle_row_index_int-\int_use:N\l__wordle_letter_index_int
+    \l__wordle_name_tl-\int_eval:n{1+\l__wordle_row_index_int}-\int_use:N\l__wordle_letter_index_int
   }
 
   \node[/Wordle,#1](\l_tmpa_tl) at ({\l__wordle_letter_index_int*\l__wordle_grid_dim},
@@ -254,7 +254,7 @@
 {
   \str_if_eq:nnTF {#1} {*}
      {
-        \cs_set_eq:NN \wordle__process_word:n \wordle__unmarked_word:n
+        \cs_set_eq:NN \wordle__process_word:n \wordle__empty_word:n
      }
      {
        \prop_set_eq:NN \l__wordle_word_counts_prop \l__wordle_answer_counts_prop
@@ -278,12 +278,12 @@
 }
 
 % typeset the word "#1" by putting boxes around each letter
-\cs_new_nopar:Npn \wordle__unmarked_word:n #1
+\cs_new_nopar:Npn \wordle__empty_word:n #1
 {
     \tl_map_inline:nn {#1}
     {
       \int_incr:N \l__wordle_letter_index_int
-      \wordle__boxed_letter:nn {unmarked,text=black}  {##1}
+      \wordle__boxed_letter:nn {empty,text=black}  {##1}
     }
     % if strict then check lengths
     \bool_if:NT \l__wordle_strict_bool
@@ -291,7 +291,7 @@
       \int_while_do:nNnn {\l__wordle_letter_index_int} < {\seq_count:N\l__wordle_answer_seq}
       {
         \int_incr:N \l__wordle_letter_index_int
-        \wordle__boxed_letter:nn {unmarked,text=black} {\c_space_tl}
+        \wordle__boxed_letter:nn {empty,text=black} {\c_space_tl}
       }
     }
     \int_incr:N \l__wordle_row_index_int
@@ -339,7 +339,7 @@
         \int_while_do:nNnn {\l__wordle_letter_index_int} < {\seq_count:N\l__wordle_answer_seq}
         {
           \int_incr:N \l__wordle_letter_index_int
-          \wordle__boxed_letter:nn {unmarked}  {\c_space_tl}
+          \wordle__boxed_letter:nn {empty}  {\c_space_tl}
         }
         \int_incr:N \l__wordle_row_index_int
     }

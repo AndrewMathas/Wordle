@@ -14,12 +14,12 @@
 
 \usepackage{listings}\lstset{language=[LaTeX]TeX,framerule=2pt}
 \lstset{language=[LaTeX]TeX,
-        texcsstyle=*\bfseries\color{FireBrick},
+        texcsstyle=*\bfseries\color{Peru},
         backgroundcolor=\color{Ivory},
         numbers=none,
         breaklines=true,
-        keywordstyle=\color{FireBrick},
-        commentstyle=\color{ForestGreen},
+        keywordstyle=\color{Sienna},
+        commentstyle=\color{BurlyWood},
         tabsize=2,
         morekeywords={Wordle,wordle},
         resetmargins=true,
@@ -29,10 +29,10 @@
 
 \newcommand\Section[1]{\subsection{\textcolor{DarkGreen}{#1}}}
 
-\NewDocumentCommand\option{ mo }{%
-  \medskip\textbf{\textcolor{DarkGreen}{#1}}%
-  \IfNoValueF{#2}{ (default: \textcolor{SeaGreen}{#2})}%
-  \index{#1}%
+\NewDocumentCommand\option{ om }{%
+  \medskip\textbf{\textcolor{Crimson}{#2}}%
+  \IfNoValueF{#1}{ (default: \textcolor{DarkRed}{#1})}%
+  \index{#2}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,6 +42,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[skins,listings]{tcolorbox}
+\usetikzlibrary{backgrounds} % for tikz={framed,...}
 
 \DeclareTotalTCBox\keyword{ O{} v }{
   fontupper=\sffamily,
@@ -73,21 +74,23 @@
   keywordstyle=\color{Crimson},%
   morekeywords={
     border,
-    case, sensitive,
+    case,
     correct,
     font,
+    letterstyle,
     lower,
     name,
     natural
     placed,
     rows,
+    sensitive,
     separation,
     shape,
     size,
     strict,
     text,
     tikz,
-    unmarked,
+    empty,
     upper,
     wrong,
   }
@@ -139,7 +142,7 @@
         {\begin{tikzpicture}[remember picture, overlay]
           \draw[shadowed](30mm,0) rectangle node[white]{Wordle} (\paperwidth-30mm,16mm);
           \node[anchor=west,boxes] at (4cm,0cm) {\@author};
-          \node[anchor=east,boxes] at (\paperwidth-4cm,0) {\wordle@version};
+          \node[anchor=east,boxes] at (\paperwidth-4cm,0) {Version \wordle@version};
          \end{tikzpicture}
         };
    \end{tikzpicture}
@@ -186,6 +189,7 @@
     listing style=tikz,
     boxsep = 0pt,
   }
+        % \usepackage{wordle}
         \begin{wordle}[wordle options]{solution}[optional tikz commands]
           guess1 guess2 ...
         \end{wordle}
@@ -222,47 +226,46 @@
   \end{example}
 
   The letters in the puzzle can be entered in upper case, lower case, or
-  mixed case and, by default, the case of tyhe letters is ignored when
+  mixed case. By default, the case of the letters is ignored when
   determining the colours the letter tiles.  There is an array of
-  different options that allow you to add extra rows to the puzzle,
-  change the colours, fonts, case sensitivity, disable special
-  formatting of the \textit{letter tiles} and so on.
-
-  The \keyword|wordle| environment can be customised using the
+  different options that allow you to  change the colours, fonts, change
+  the case sensitivity, and add extra rows to the puzzle, disable
+  special formatting of the \textit{letter tiles}. More precisely,
+  the \keyword|wordle| environment can be customised using the
   following options:
-  \begin{quote}\sffamily\color{DarkGreen}
+  \begin{quote}\sffamily\color{Crimson}
     border,
     correct,
     font,
     letterstyle,
-    name,
     placed,
-    rows,
     separation,
     shape,
     size,
-    strict,
     text,
-    tikz,
-    unmarked,
     wrong,
+    name,
+    tikz,
+    strict,
+    rows,
+    empty,
     case~sensitive,
     lower case,
     natural case,
     upper case,
   \end{quote}
-  These options can be set locally, as the optional argument to a
-  \keyword|wordle| environment, by giving a comma separated list
-  key-value pairs, or they can be set globally (that is, in the current
-  \LaTeX\ group), or using the \keyword{\WordleSetup} command
-  \index{\textbackslash WordleSetup}or as package options, via
-  \keyword{\usepackage[options]{wordle}}. The order of the options
-  does not matter, except that later options take precedence over
-  earlier ones, with the exception of \option{tikz} and
-  \option{letterstyle} are always applied last.
+  These options are given as a comma separated list key-value pairs.
+  They can be set locally, using the optional argument of the
+  \keyword|wordle| environment, or they can be set globally (more
+  accurately, in the current \LaTeX\ group) using the
+  \keyword{\WordleSetup} command \index{\textbackslash WordleSetup}, or
+  as global package options, via \keyword{\usepackage[options]{wordle}}.
+  The order of the options does not matter, except that later options
+  take precedence over earlier ones, with the exception of \option{tikz}
+  and \option{letterstyle} are always applied last.
 
   The \keyword{wordle} puzzles are drawn using \ctan{TikZ}, with each
-  letter in the puzzle sitting in a \ctan{TikZ} node. Many of the
+  letter in the puzzle sitting inside a \ctan{TikZ} node. Many of the
   options control the settings of these nodes. Several of these options
   set the colours used by \keyword{wordle}. Colour names use the
   \keyword{svgnames} names provided by the \ctan{xcolor} package.
@@ -277,7 +280,7 @@
   a \ctan{TikZ} \keyword{\node}. The options below control the different
   style settings of these nodes.
 
-  \option{border}[white]
+  \option[white]{border}
 
   Sets the border colour of the \keyword{wordle} letter tiles.
 
@@ -289,7 +292,7 @@
     \end{wordle}
   \end{example}
 
-  \option{correct}[ForestGreen!80!LimeGreen]
+  \option[ForestGreen!80!LimeGreen]{correct}
 
   Sets the tile colour of the correct \keyword{wordle} letter tiles,
   which are the letters in the same positions as letters in the solution.
@@ -302,7 +305,7 @@
     \end{wordle}
   \end{example}
 
-  \option{font}[\textbackslash bfseries]
+  \option[\textbackslash bfseries]{font}
 
   Sets the font used by \keyword{wordle} letters. Any valid sequence of
   \LaTeX\ font commands can be used.
@@ -315,7 +318,7 @@
     \end{wordle}
   \end{example}
 
-  \option{placed}[Gold!70!DarkGoldenrod]
+  \option[Gold!70!DarkGoldenrod]{placed}
 
   Sets the tile colour of the \textit{placed} \keyword{wordle} letter tiles,
   which are those letters that appear in the solution but which are
@@ -329,7 +332,7 @@
     \end{wordle}
   \end{example}
 
-  \option{separation}[1mm]
+  \option[1mm]{separation}
 
   Sets the separation distance between the \keyword{wordle} letter
   tiles.
@@ -342,7 +345,7 @@
     \end{wordle}
   \end{example}
 
-  \option{shape}[rectangle]
+  \option[rectangle]{shape}
 
   Specifies the \textit{shape} of the \keyword{wordle} letter. The default tile
   \option{shape} is a \textsf{rectangle} (more precisely, a square), but the
@@ -355,7 +358,7 @@
     \end{wordle}
   \end{example}
 
-  \option{size}[7.0mm]
+  \option[7.0mm]{size}
 
   The \option{size} option sets the size of the \keyword{wordle}
   letter tiles.  If you change the size  of the tiles, then you will
@@ -368,7 +371,7 @@
     \end{wordle}
   \end{example}
 
-  \option{text}[white]
+  \option[white]{text}
 
   Sets the colour of the letters in the \keyword{wordle} puzzle.
 
@@ -378,7 +381,7 @@
     \end{wordle}
   \end{example}
 
-  \option{wrong}[Gray]
+  \option[Gray]{wrong}
 
   Sets the tile colour of the \keyword{wordle} letter tiles for letters
   that do nbot appear in the solution.
@@ -389,7 +392,7 @@
     \end{wordle}
   \end{example}
 
-  \option{letterstyle}[--]
+  \option[--]{letterstyle}
 
   A comma-separated list of \ctan{Tikz} node keys that are appended to
   the style of the \ctan{TikZ} node that contains each of the
@@ -412,12 +415,15 @@
   \end{example}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
   \Section{Extra rows and columns}
 
-  \option{rows}[0]
+  By default, the number of letters in each word in the \keyword{wordle}
+  is assumed to the same as the of letters in the solutions, and the
+  number of rows in the puzzle is number of words given in the
+  environment. The options below allow give more control over the number
+  of rows and columns in the puzzle.
 
-  \option{strict}[false]
+  \option[false]{strict}
 
   By default, the \keyword{wordle} environment does not check to make
   sure that each word in the puzzle has the same length as the solution,
@@ -446,12 +452,61 @@
     \end{wordle}
   \end{example}
 
-  \option{unmarked}[white]
-  Sets the tile colour of the \textit{unmarked } \keyword{wordle} letter
-  tiles, which are neither correct or placed.
+  By default, a \keyword{wordle} environment displays the words
+  in the puzzle environment with one word per row. You can add extra
+  (blank) rows to the puzzle with the \option{rows} option.
+
+  \option[--]{rows}
+
+  \begin{example}
+    \begin{wordle}[rows=4]{ANVIL}
+      CRANE
+      NATAL
+      ANVIL
+    \end{wordle}
+  \end{example}
+
+  The \option{rows} option only adds extra rows to the puzzle if they are
+  needed. It does not prevent rows from appearing.
+
+  \begin{example}
+    \begin{wordle}[rows=2]{ANVIL}
+      CRANE
+      NATAL
+      ANVIL
+    \end{wordle}
+  \end{example}
+
+
+  \option[OldLace]{empty}
+
+  Sets the tile colour of the \textit{\empty} tiles in the puzzle.
+
+  \begin{example}
+    \begin{wordle}[rows=5, empty=AliceBlue]{ANVIL}
+      CRANE
+      NATAL
+      ANVIL
+    \end{wordle}
+  \end{example}
+
+  \option{*}
+
+  You can disable the automatic colouring of future letter tiles by
+  inserting an asterisk,~\option{*}, as a \textit{word} in the puzzle.
+
+  \begin{example}
+    \begin{wordle}{ANVIL}
+      CRANE
+      NATAL
+      *
+      ANNUL
+      ANVIL
+    \end{wordle}
+  \end{example}
+
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
   \Section{Case sensitivity}
   \index{case~sensitive}
   \index{case~sensitive!lower case}
@@ -461,7 +516,7 @@
   By default, the letters are printed in upper and lower case, exactly
   as typed, and the letter comparisons are not case sensitive.
 
-  \option{case~sensitive}[false]
+  \option[false]{case~sensitive}
 
   By default the \keyword{wordle} puzzles are not case sensitive, but
   you can make them case sensitive using this option. Note that
@@ -492,11 +547,10 @@
   solution.
 
   The \option{upper case} and \option{lower case} options force all
-  letters in the puzzle to be in upper or upper case, respectively. Both
-  of these options disable the case sensitivity of the tests:
+  letters in the puzzle to be in upper or upper case, respectively.
 
   \begin{example}
-    \begin{wordle}[lower case]{youth}
+    \begin{wordle}[lower case]{YOUTH}
       North
       South
       Youth
@@ -511,6 +565,8 @@
     \end{wordle}
   \end{example}
 
+  As these examples show, both of these options disable the case sensitivity of the tests:
+
   To balance these two options, the \option{natural case} option makes
   the \keyword{wordle} environment respect the case of the letters as
   typed into the environment.
@@ -519,35 +575,70 @@
     \begin{wordle}[natural case]{youth}
       North
       South
-      Youth
+      youth
     \end{wordle}
   \end{example}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
   \Section{Adding \ctan{TikZ} code}
 
   The \keyword{wordle} environment is a fancy wrapper around a
-  \keyword{tikzpicture} environment, with some fancy code under the hood
-  to determine the colour of the letter tiles. The second optional
-  argument to the \keyword{wordle} environment can be used to add
-  further \ctan{TikZ} commands to the puzzle.
+  \keyword{tikzpicture} environment, with some code under the hood
+  to automatically colour of the letter tiles. The options in this
+  section describe how to access the underlying \ctan{TikZ} layer.
 
-  \option{name}[W]
+  \option[--]{tikz}
 
-  \option{tikz}[]
+  The \option{tikz} option passes style commands to the underlying
+  \keyword{tikzpicture} environment. The \option{tikz} option is almost
+  the same as using a \keyword{\tikzset{...}} command before the
+  \keyword{wordle} environment except that it is applied \textit{after}
+  the style commands above and \textit{before} \option{letterstyle} is
+  applied.
 
   \begin{example}
-    \begin{wordle}[border=red, rows=4, case sensitive]{Ladle}
-      [{
-        \draw[blue,ultra thick](W1-2.north east)--(W3-1.center);
-      }]
-      Flail lapel * Ladle
+    % \usetikzlibrary{backgrounds}
+    \begin{wordle}[
+        tikz={framed,
+              background rectangle/.style={
+                double,ultra thick,
+                draw=SteelBlue,
+              }
+        }]{youth}
+      North
+      South
+      youth
     \end{wordle}
   \end{example}
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  In addition to passing \ctan{TikZ} style settings to the underlying
+  \keyword{tikzpicture} environment, it is possible to add \ctan{TikZ}
+  commands to a \keyword{wordle} environment. The letter tiles in  a
+  \keyword{wordle} environment are \ctan{TikZ} nodes, which are
+  automatically given names of the form
+  \textsf{W-$\mathsf{r}$-$\mathsf{c}$}, for the tile in row~$\mathsf{r}$
+  and column~$\mathsf{c}$. The \textit{prefix} of the node name can be
+  changed using the \option{name} option.
 
+  The second optional argument to the \keyword{wordle} environment can
+  be used to add further \ctan{TikZ} commands to the puzzle.
+
+  \option[W]{name}
+
+  \begin{example}
+    \begin{wordle}[name=M,
+          tikz={arr/.style={Fuchsia,ultra thick,->}}]{MACAW}
+        [{
+          \draw[arr](M-1-3.south)--(M-3-2.north)--(M-4-2.north);
+          \draw[arr](M-1-1.south)--(M-3-5.north)--(M-4-5.north);
+        }]
+      CRANE HOTLY BASIC MACAW
+    \end{wordle}
+  \end{example}
+
+  In practice, I am not sure that anyone will find a real use for this!
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \Section{The package code}
 
   The \keyword{wordle} package is a \LaTeX3 package. There are many
@@ -555,6 +646,12 @@
   colouring of the letter tiles is a fun exercise in \LaTeX3
   programming, which was motivated by a
   \href{https://tex.stackexchange.com/questions/659860/wordle-like-colored-letter-boxes-in-latex/660056#660056}{tex.stackexchange.com} post.
+
+  Bug reports and feature requests can be made on \href{https://github.com/AndrewMathas/Wordle}{github}.
+
+  \makeatletter
+  Version: \wordle@version
+  \makeatother
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \printindex
