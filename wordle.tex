@@ -611,6 +611,9 @@
     \end{wordle}
   \end{example}
 
+  As the example indicates, it is advisable to enclose complicated
+  \ctan{TikZ} settings inside braces.
+
   In addition to passing \ctan{TikZ} style settings to the underlying
   \keyword{tikzpicture} environment, it is possible to add \ctan{TikZ}
   commands to a \keyword{wordle} environment. The letter tiles in  a
@@ -621,7 +624,9 @@
   changed using the \option{name} option.
 
   The second optional argument to the \keyword{wordle} environment can
-  be used to add further \ctan{TikZ} commands to the puzzle.
+  be used to add further \ctan{TikZ} commands to the puzzle. As the
+  \option{tikz} option, it is advisable to enclose complicated
+  \ctan{TikZ} commands inside braces.
 
   \option[W]{name}
 
@@ -636,7 +641,7 @@
     \end{wordle}
   \end{example}
 
-  In practice, I am not sure that anyone will find a real use for this!
+  In practice, I am not convinced that anyone will find a real use for this!
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \Section{The package code}
