@@ -42,7 +42,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[skins,listings]{tcolorbox}
-\usetikzlibrary{backgrounds} % for tikz={framed,...}
+\usetikzlibrary{backgrounds, shapes.geometric} % for tikz={framed,...}
 
 \DeclareTotalTCBox\keyword{ O{} v }{
   fontupper=\sffamily,
@@ -75,24 +75,36 @@
   morekeywords={
     border,
     case,
+    colors,
+    colours,
     correct,
     font,
-    letterstyle,
+    letters,
+    tilestyle,
     lower,
     name,
     natural
-    placed,
+    present,
+    frame,
     rows,
     sensitive,
     separation,
     shape,
     size,
     strict,
+    style,
     text,
     tikz,
     empty,
     upper,
-    wrong,
+    absent,
+  },
+  classoffset=3,
+  keywordstyle=\color{DarkOrange},%
+  morekeywords={
+    hard,
+    standard,
+    sutom,
   }
 }
 
@@ -116,7 +128,7 @@
 
 
 \makeatletter
-\author{Andrew Mathas}
+\author{Andrew Mathas and Cédric Pierquet}
 \usepackage{tikz}
 \usetikzlibrary{shadows.blur}
 \tikzset{shadowed/.style={blur shadow={shadow blur steps=5},
@@ -190,7 +202,7 @@
     boxsep = 0pt,
   }
         % \usepackage{wordle}
-        \begin{wordle}[wordle options]{solution}[optional tikz commands]
+        \begin{wordle}[wordle settings]{solution}[optional tikz commands]
           guess1 guess2 ...
         \end{wordle}
   \end{tcblisting}
@@ -206,12 +218,21 @@
     \end{wordle}
   \end{example}
 
+  \begin{example}
+    \begin{GrilleSutom}{REBUS}
+        ABRIS
+        ROUTE
+        RUDES
+        REBUS
+    \end{GrilleSutom}
+  \end{example}
+
   As in the online puzzles, the \keyword{wordle} environment
   automatically colours the letter tiles
-  \keyword[colback=ForestGreen!80!LimeGreen,colupper=White]{green}
-  when the letter is in the same position as the solution and as
-  \keyword[colback=Gold!70!DarkGoldenrod,colupper=White]{gold} when
-  the letter appears in the solution but is in the wrong position. As
+  \keyword[colback=WordleCorrect,colupper=White]{green}
+  when the letter is in the same position as the solution, and as
+  \keyword[colback=WordlePresent,colupper=White]{gold} when
+  the letter is in the solution but it is not in the correct position. As
   described below, these colours can be changed to suit your tastes.
 
   The number of letters in the puzzle is determined by the solution,
@@ -235,17 +256,21 @@
   following options:
   \begin{quote}\sffamily\color{Crimson}
     border,
+    colors,
+    colours,
     correct,
     font,
-    letterstyle,
-    placed,
+    letters,
+    tilestyle,
+    present,
     separation,
     shape,
     size,
     text,
-    wrong,
+    absent,
     name,
     tikz,
+    style,
     strict,
     rows,
     empty,
@@ -262,7 +287,7 @@
   as global package options, via \keyword{\usepackage[options]{wordle}}.
   The order of the options does not matter, except that later options
   take precedence over earlier ones, with the exception of \option{tikz}
-  and \option{letterstyle} are always applied last.
+  and \option{tilestyle} are always applied last.
 
   The \keyword{wordle} puzzles are drawn using \ctan{TikZ}, with each
   letter in the puzzle sitting inside a \ctan{TikZ} node. Many of the
@@ -274,11 +299,69 @@
   function.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \Section{Options controlling the style of the letter tiles}
+  \Section{Wordle styles}
+
+  It is possible to change the many characteristics of the tiles in a
+  \keyword{wordle} puzzle, including their colours, the fonts and so.
+  The more common settings can be setting using the \option{style}
+  keyword. \textit{The style should always be set first because,
+  the style settings are likely to override earlier settings.}
+
+  The following styles are supported:
+
+  \option{sutom}
+
+  \begin{example}
+    \begin{wordle}[style=sutom]{ANVIL}
+      CRANE
+      NATAL
+      ANVIL
+    \end{wordle}
+  \end{example}
+
+  \option{standard} (the default),
+
+  \begin{example}
+    \begin{wordle}[style=standard]{ANVIL}
+      CRANE
+      NATAL
+      ANVIL
+    \end{wordle}
+  \end{example}
+
+  \option{hard }
+
+  \begin{example}
+    \begin{wordle}[style=hard]{ANVIL}
+      CRANE
+      NATAL
+      ANVIL
+    \end{wordle}
+  \end{example}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Section{Options controlling the individual styles of the letter tiles}
 
   The letter tiles in a \keyword{wordle} environment are typeset insude
   a \ctan{TikZ} \keyword{\node}. The options below control the different
   style settings of these nodes.
+
+  \option[--]{colours}
+
+  The \option{colours} option is a short-hand for specifying the colours
+  of the \option{absent}, \option{present}, \option{correct} and
+  \option{empty} tiles, in that order. Later colours can be omitted but
+  the colours should be given in this order, from left to right, as a
+  comma separated list enclosed in braces. To support north American
+  dialects, is also possible to use \option{color}.
+
+  \begin{example}
+    \begin{wordle}[colour={LightGray,Orange,Teal}]{cellar}
+      pounds
+      tailer
+      cellar
+    \end{wordle}
+  \end{example}
 
   \option[white]{border}
 
@@ -292,7 +375,7 @@
     \end{wordle}
   \end{example}
 
-  \option[ForestGreen!80!LimeGreen]{correct}
+  \option[WordleCorrect]{correct}
 
   Sets the tile colour of the correct \keyword{wordle} letter tiles,
   which are the letters in the same positions as letters in the solution.
@@ -318,14 +401,14 @@
     \end{wordle}
   \end{example}
 
-  \option[Gold!70!DarkGoldenrod]{placed}
+  \option[WordlePresent]{present}
 
-  Sets the tile colour of the \textit{placed} \keyword{wordle} letter tiles,
+  Sets the tile colour of the \textit{present} \keyword{wordle} letter tiles,
   which are those letters that appear in the solution but which are
-  currently in the wrong position.
+  currently in the absent position.
 
   \begin{example}
-    \begin{wordle}[placed=Orange]{ANVIL}
+    \begin{wordle}[present=Orange]{ANVIL}
       CRANE
       NATAL
       ANVIL
@@ -348,12 +431,37 @@
   \option[rectangle]{shape}
 
   Specifies the \textit{shape} of the \keyword{wordle} letter. The default tile
-  \option{shape} is a \textsf{rectangle} (more precisely, a square), but the
-  \ctan{TikZ} node shapes of \textsf{circle} and \textsf{coordinate} can
-  also be used; see section 17.2 of the \ctan{TikZ} manual.
+  \option{shape} is a \texttt{rectangle} (more precisely, a square), but the
+  \ctan{TikZ} node shapes of \texttt{circle} and \texttt{coordinate} can
+  be used; see section 17.2 of the \ctan{TikZ} manual.
+
 
   \begin{example}
     \begin{wordle}[shape=circle]{LADLE}
+       FLAIL LAPEL * LADLE LOVER
+    \end{wordle}
+  \end{example}
+
+  If you load the \ctan{TikZ} \textsf{shapes.geometric} package then you
+  can also use the shapes it provides, including \texttt{diamond},
+  \texttt{ellipse}, \texttt{trapezium} and \texttt{star}; see section~71.2
+  of the \ctan{TikZ} manual.
+
+  \begin{example}
+    % \usepackage{shapes.geometric}
+    \begin{wordle}[shape=diamond]{LADLE}
+       FLAIL LAPEL * LADLE LOVER
+    \end{wordle}
+  \end{example}
+
+  \begin{example}
+    \begin{wordle}[style=sutom]{LADLE}
+       FLAIL LAPEL * LADLE LOVER
+    \end{wordle}
+  \end{example}
+
+  \begin{example}
+    \begin{wordle}[style=hard]{LADLE}
        FLAIL LAPEL * LADLE LOVER
     \end{wordle}
   \end{example}
@@ -381,33 +489,32 @@
     \end{wordle}
   \end{example}
 
-  \option[Gray]{wrong}
+  \option[Gray]{absent}
 
   Sets the tile colour of the \keyword{wordle} letter tiles for letters
-  that do nbot appear in the solution.
+  that do not appear in the solution.
 
   \begin{example}
-    \begin{wordle}[wrong=red]{LADLE}
+    \begin{wordle}[absent=red]{LADLE}
        FLAIL LAPEL LASER
     \end{wordle}
   \end{example}
 
-  \option[--]{letterstyle}
+  \option[--]{tilestyle}
 
   A comma-separated list of \ctan{Tikz} node keys that are appended to
   the style of the \ctan{TikZ} node that contains each of the
-  \keyword{wordle} letters.  Most of the options given above can also be
-  set using the \option{letterstyle} option.
+  \keyword{wordle} letters.  Some of the options given above can be set
+  directly using the \option{tilestyle} option, but some care must be
+  taken not to break the special formatting of letters provided by the
+  \keyword{wordle} environment.\par
 
   With most of the \keyword{wordle} options, the latter options take
-  precedence, however, the \option{letterstyle} option is applied last,
-  so it overrides any competing options. When using the
-  \option{letterstyle} option, you should be careful not to break the
-  special formatting of letters provided by the \keyword{wordle}
-  environment.\par
+  precedence, however, the \option{tilestyle} option is applied last,
+  so it overrides any competing options.
 
   \begin{example}
-    \begin{wordle}[letterstyle={rounded corners}]{ANVIL}
+    \begin{wordle}[tilestyle={rounded corners}]{ANVIL}
       CRANE
       NATAL
       ANVIL
@@ -422,6 +529,18 @@
   number of rows in the puzzle is number of words given in the
   environment. The options below allow give more control over the number
   of rows and columns in the puzzle.
+
+  \option[true]{letters}
+
+  \begin{example}
+    \begin{wordle}[letters=false]{CRAZE}
+      GRAIL
+      TRACK
+      CRAMPS
+      CRAM
+      CRABS
+    \end{wordle}
+  \end{example}
 
   \option[false]{strict}
 
@@ -486,7 +605,7 @@
     \begin{wordle}[rows=5, empty=AliceBlue]{ANVIL}
       CRANE
       NATAL
-      ANVIL
+      ANVI
     \end{wordle}
   \end{example}
 
@@ -593,7 +712,7 @@
   \keyword{tikzpicture} environment. The \option{tikz} option is almost
   the same as using a \keyword{\tikzset{...}} command before the
   \keyword{wordle} environment except that it is applied \textit{after}
-  the style commands above and \textit{before} \option{letterstyle} is
+  the style commands above and \textit{before} \option{tilestyle} is
   applied.
 
   \begin{example}
@@ -632,7 +751,8 @@
 
   \begin{example}
     \begin{wordle}[name=M,
-          tikz={arr/.style={Fuchsia,ultra thick,->}}]{MACAW}
+          tikz={arr/.style={Fuchsia,ultra thick,->}}
+        ]{MACAW}
         [{
           \draw[arr](M-1-3.south)--(M-3-2.north)--(M-4-2.north);
           \draw[arr](M-1-1.south)--(M-3-5.north)--(M-4-5.north);
