@@ -870,14 +870,13 @@
   \end{example}
 
   A second use the node  names is in conjunction with \ctan{TikZ}
-  commands that are added to a \keyword{wordle} puzzle using the second
-  optional argument to the environment. As with the \option{tikz}
-  option, it is advisable to enclose complicated \ctan{TikZ} commands
-  inside braces.
+  commands that can be added to a \keyword{wordle} puzzle using its
+  second optional argument. As with the \option{tikz} option, it is
+  advisable to enclose complicated \ctan{TikZ} commands inside braces.
 
   \begin{example}
     \begin{wordle}[name=M,
-          tikz={arr/.style={DodgerBlue,ultra thick,->}}
+          tikz={arr/.style={Red,ultra thick,->}}
         ]{MACAW}
         [{
           \draw[arr](M-1-3.south)--(M-3-2.north)--(M-4-2.north);
