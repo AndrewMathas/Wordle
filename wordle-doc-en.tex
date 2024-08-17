@@ -35,7 +35,7 @@
   {%
     \textbf{\textcolor{Crimson}{#2}}
     \str_if_empty:nF {#1}{~(default:~\textcolor{DarkRed}{#1})}%
-    \IfNoValueF{#3}{\hfill\textcolor{Gray}{[accepts: #3]}}%
+    \IfNoValueF{#3}{\hfill\textcolor{Gray}{[accepts:~#3]}}%
   }%
   \index{#2}%
 }
@@ -289,25 +289,26 @@
 
   The letters in the puzzle can be entered in upper case, lower case, or
   mixed case. By default, the case of the letters is ignored when
-  determining the colours of the letter tiles. As described below, there is an array of
-  different options that allow you to  change the colours, fonts, change
-  the case sensitivity, and add extra rows to the puzzle, disable
-  special formatting of the \textit{letter tiles}.
-  These options are given as a comma separated list key-value pairs.
-  They can be set locally, using the optional argument of the
-  \keyword|wordle| environment, or they can be set globally (more
-  accurately, in the current \LaTeX\ group) using the
-  \keyword{\WordleSetup} command \index{\textbackslash WordleSetup}, or
-  as global package options, via \keyword{\usepackage[options]{wordle}}.
-  The order of the options does not matter, except that later options
-  take precedence over earlier ones, with the exception of \option{tikz}
-  and \option{tile style} are always applied last.
+  determining the colours of the letter tiles.
+
+  As described below, the \keyword{wordle} and \keyword{GrilleSutom}
+  environments accept an array of different options that change the
+  colours, fonts, and shapes of the tile. In addition, you can the case
+  sensitivity of the environments, add extra rows to the puzzle, disable
+  special formatting of the \textit{letter tiles}.  These options are
+  given as a comma separated list key-value pairs.  They can be set
+  locally, using the optional argument of the \keyword|wordle|
+  environment, or they can be set globally (more accurately, in the
+  current \LaTeX\ group) using the \keyword{\WordleSetup} command
+  \index{\textbackslash WordleSetup}, or as global package options, via
+  \keyword{\usepackage[options]{wordle}}.  The order of the options does
+  not matter, except that later options take precedence over earlier
+  ones, with the exception of \option{tikz} and \option{tile style} keys
+  which are always applied last.
 
   The \keyword{wordle} puzzles are drawn using \ctan{TikZ}, with each
   letter in the puzzle sitting inside a \ctan{TikZ} node. Many of the
-  options control the settings of these nodes. Several of these options
-  set the colours used by \keyword{wordle}. Colour names use the
-  \keyword{svgnames} names provided by the \ctan{xcolor} package.
+  options control the settings of these nodes.
 
   The descriptions of the options below are grouped according to their
   function.
@@ -571,7 +572,7 @@
   The \option{scale} option rescales the \keyword{wordle} environment.
   The \option{scale} alters the dimensions sets by the \option{rounded},
   \option{separation} \option{size} and \option{thickness}  options.  If
-  you change the size  of the tiles, then you will almost certainly want
+  you change the scale, then you will almost certainly want
   to change font size font as well, which you can do using the
   \option{font} option:
 
@@ -585,9 +586,10 @@
 
   \option[7.0mm]{size}[a length]
 
-  The \option{size} option sets the size of the \keyword{wordle}
-  letter tiles. Unlike the \option{scale} option, \option{size} changes only the dimension of
-  the letter tiles.
+  The \option{size} option sets the size of the \keyword{wordle} letter
+  tiles. Unlike the \option{scale} option, \option{size} only changes
+  the dimensions of the letter tiles. For \keyword{GrilleSutom}, the
+  default size is \textcolor{FireBrick}{10mm}.
 
   \begin{example}
     \begin{wordle}[size=10mm, font=\huge\bfseries]{LADLE}
@@ -597,8 +599,9 @@
 
   \option[0.25mm]{thickness}[a length]
 
-  Sets the thickness of the border of the \keyword{wordle} letter tiles.
-  By default, the borders of the tiles are white,
+  Sets the border thickness of the \keyword{wordle} letter tiles.  By
+  default, the borders of the tiles are white, which makes this setting
+  hard to see, so the following example changes the border to red.
 
   \begin{example}
     \begin{wordle}[thickness=1mm, borders=red]{LADLE}
@@ -613,14 +616,16 @@
   A comma-separated list of \ctan{Tikz} node keys that are appended to
   the style of the \ctan{TikZ} node that contains each of the
   \keyword{wordle} letters.  Some of the options given above can be set
-  directly using the \option{tile style} option, but some care must be
-  taken not to break the special formatting of letters provided by the
-  \keyword{wordle} environment.\par
+  directly using the \option{tile style} option. When using the
+  \option{tile style}, be careful not to break the special formatting of
+  letters provided by the \keyword{wordle} environment.\par
 
   With most of the \keyword{wordle} options, the latter options take
   precedence, however, the \option{tile style} option is applied last,
   so it overrides any competing options.
 
+  % TODO: Fix this because it looks like this style is being applied
+  % twice because the PDF file shows a rotation of 90 = 2*45...
   \begin{example}
     \begin{wordle}[tile style={rotate=45}]{ANVIL}
       CRANE
@@ -632,16 +637,16 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \Section{Extra rows and columns}
 
-  By default, the number of letters in each word in the \keyword{wordle}
-  is assumed to the same as the of letters in the solutions, and the
-  number of rows in the puzzle is number of words given in the
-  environment. The options below allow give more control over the number
-  of rows and columns in the puzzle.
+  By default, all of the words in a \keyword{wordle} puzzle are assumed
+  to have the same number of letters as the solution, and the number of
+  rows in the puzzle is number of words given in the environment. The
+  options below give more control over the number of rows and columns in
+  the puzzle.
 
   \option[]{letters} (default)\qquad
   \option[]{noletters}
 
-  By default, the letters in the puzzle are printed. You can remove the
+  By default, the letters in the puzzle are printed. You can hide the
   letters from the puzzle, while still keeping the \keyword{wordle} tile
   colouring, using \option{noletters}.
 
@@ -702,8 +707,9 @@
     \end{wordle}
   \end{example}
 
-  The \option{rows} option only adds extra rows to the puzzle if they are
-  needed. It does not prevent rows from appearing.
+  The \option{rows} option only adds extra rows to the puzzle if they
+  are needed. This option does not prevent ``extra'' rows from
+  appearing.
 
   \begin{example}
     \begin{wordle}[rows=2]{ANVIL}
@@ -716,14 +722,15 @@
 
   \option[]{*}
 
-  You can disable the automatic colouring of future letter tiles by
-  inserting an asterisk,~\option{*}, as a \textit{word} in the puzzle.
+  You can disable the special colouring of letter tiles in a
+  \keyword{wordle} puzle by adding an asterisk,~\option{*}, as a
+  \textit{word}, into the puzzle.
 
   \begin{example}
     \begin{wordle}{ANVIL}
       CRANE
       NATAL
-      *
+      *      % disable wordle colouring
       ANNUL
       ANVIL
     \end{wordle}
@@ -756,7 +763,7 @@
     \end{wordle}
   \end{example}
 
-  Here is a more (case) sensitive version of this puzzle.
+  Here is a case sensitive version of this puzzle.
 
   \begin{example}
     \begin{wordle}[case sensitive]{youth}
@@ -766,9 +773,9 @@
     \end{wordle}
   \end{example}
 
-  As this puzzle is case sensitive, the \keyword{Y} on the last line
-  is not correct because it does not match the \keyword{y} in the
-  solution.
+  As this puzzle is case sensitive, the \keyword{Y} on the last line is
+  not marked as being correct because it does not match the \keyword{y}
+  in the solution.
 
   \option[]{natural case} (default) \qquad
   \option[]{lower case} \qquad
@@ -793,11 +800,14 @@
     \end{wordle}
   \end{example}
 
-  As these examples show, both of these options disable the case sensitivity of the tests for colouring the \keyword{wordle} tiles.
-
-  To balance these two options, the \option{natural case} option makes
-  the \keyword{wordle} environment respect the case of the letters as
-  typed into the environment.
+  As these examples show, both of these options disable the case
+  sensitivity of the tests for colouring the \keyword{wordle} tiles;
+  that is, they set \option{case sensitive=false}.  To balance the
+  \option{lower case} and \option{upper case} options, the
+  \option{natural case} option makes the \keyword{wordle} environment
+  restores the default behaviour, which respects the case of the letters
+  as typed into the environment. The \option{natural case} option does
+  not change the \option{case sensitive} setting.
 
   \begin{example}
     \begin{wordle}[natural case]{youth} % the default
@@ -811,36 +821,35 @@
   \Section{Adding \ctan{TikZ} code}
 
   The \keyword{wordle} environment is a fancy wrapper around a
-  \keyword{tikzpicture} environment, with some code under the hood
-  to automatically colour of the letter tiles. The options in this
-  section describe how to access the underlying \ctan{TikZ} layer.
+  \keyword{tikzpicture} environment, with some code under the hood that
+  automatically colours the letter tiles according to how well they
+  match the solution. The options in this section describe how to access
+  the underlying \ctan{TikZ} layer.
 
   \option[]{tikz}[TikZ commands]
 
-  The \option{tikz} option passes style commands to the underlying
+  The \option{tikz} option passes \ctan{TikZ} keys to the underlying
   \keyword{tikzpicture} environment. The \option{tikz} option is almost
   the same as using a \keyword{\tikzset{...}} command before the
   \keyword{wordle} environment except that it is applied to the
-  \keyword{tikpicture} environment that contains the \keyword{wordle}
-  puzzle and it is applied \textit{after} all of options above and
-  \textit{before} \option{tile style} is applied.
+  \keyword{tikpicture} environment, which contains the \keyword{wordle}
+  puzzle, such that the \option{tikz} keys are applied \textit{after}
+  all of options above and \textit{before} \option{tile style} is
+  applied.
 
   \begin{example}
     % \usetikzlibrary{backgrounds}
     \begin{wordle}[
         tikz={framed,
               background rectangle/.style={
-                double,ultra thick,
-                draw=SteelBlue,
+                double,ultra thick, draw=SteelBlue
               }
         }]{youth}
-      North
-      South
-      youth
+      North South youth
     \end{wordle}
   \end{example}
 
-  As the example indicates, it is advisable to enclose complicated
+  As this example indicates, it is advisable to enclose complicated
   \ctan{TikZ} settings inside braces.
 
   \option[W]{name}
@@ -848,11 +857,12 @@
   All of the tiles in a \keyword{wordle} puzzle are given node names of
   the form $\langle$\textsf{name}$\rangle$-$\mathsf{r}$-$\mathsf{c}$,
   for the tile in row~$\mathsf{r}$ and column~$\mathsf{c}$. By default,
-  \textsf{name} is \texttt{W}, but this can be changed using the
+  the prefix \textsf{name} is \texttt{W}. Within reason, the
+  \option{name} prefix can be changed to anything you like using the
   \option{name} option.
 
-  One use possible use of the node is with TikZ \texttt{overlay}
-  commands:
+  One way to use the named nodes for the letter tiles is with
+  \ctan{TikZ} \texttt{overlay} and \texttt{remember picture} keys:
 
   \begin{example}
     \begin{wordle}[tikz={remember picture}]{CRAZE}
@@ -862,17 +872,18 @@
     \end{wordle}
   \end{example}
 
-  Using the node names it is possible to draw
-  arrows pointing to tiles in the puzzle:
+  This makes it possible, for example, to draw arrows to tiles in a
+  \keyword{wordle} puzzle:
 
   \begin{example}
     \tikz[remember picture]\draw[overlay, very thick, opacity=0.5,->,red](0,0)node{No M!} to [out=90, in=180](W-2-5);
   \end{example}
 
-  A second use the node  names is in conjunction with \ctan{TikZ}
-  commands that can be added to a \keyword{wordle} puzzle using its
-  second optional argument. As with the \option{tikz} option, it is
-  advisable to enclose complicated \ctan{TikZ} commands inside braces.
+  A second use of the tile node names is in conjunction with \ctan{TikZ}
+  commands that can be added to a \keyword{wordle} puzzle using the
+  second optional argument to the environment. As with the \option{tikz}
+  option, it is advisable to enclose complicated \ctan{TikZ} commands
+  inside braces.
 
   \begin{example}
     \begin{wordle}[name=M,
