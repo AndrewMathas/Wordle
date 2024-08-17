@@ -351,6 +351,7 @@
         minimum~height = \l__wordle_size_dim,
         minimum~size   = \l__wordle_size_dim,
         rounded~corners= \l__wordle_rounded_dim,
+        line~width     = \l__wordle_thickness_dim,
         font           = \l__wordle_font_tl,
       % scale          = \fp_to_decimal:N \l__wordle_scale_fp,
         text           = \tl_use:c {l__wordle_#1_text_tl},
@@ -359,9 +360,10 @@
     },
     frame/.style     = {
         /Wordle/tile=#1,
-        draw = \tl_use:c{l__wordle_#1_border_tl},
-        line~width = \l__wordle_thickness_dim,
-        fill = \tl_use:c {l__wordle_#1_colour_tl},
+        /tikz,         % change back to using tikz keys
+        draw  = \tl_use:c{l__wordle_#1_border_tl},
+        minimum~size   = {\l__wordle_size_dim+0.5pt},
+        fill  = \tl_use:c {l__wordle_#1_colour_tl},
         shape = rectangle,
     },
 }
