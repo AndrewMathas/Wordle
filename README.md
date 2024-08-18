@@ -4,7 +4,7 @@
 
 # Wordle
 
-A stupidly feature-rich LaTeX package for typesetting **Wordle** puzzles. This package provides a stupidly feature-rich way of creating Wordle puzzles in LaTeX, which [Wikipedia](https://en.wikipedia.org/wiki/Wordle) describes as a hugely popular web-based word game created and developed by Welsh software engineer Josh Wardle. 
+This package provides a stupidly feature-rich way of creating Wordle puzzles in LaTeX, which [Wikipedia](https://en.wikipedia.org/wiki/Wordle) describes as a hugely popular web-based word game created and developed by Welsh software engineer Josh Wardle. 
 
 This package provides the `wordle` environment, which uses the syntax:
 
