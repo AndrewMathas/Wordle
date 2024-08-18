@@ -220,27 +220,8 @@
   Ce package fournit un moyen \textit{stupidement} riche en fonctionnalités de créer des puzzles \keyword{Wordle} en \LaTeX, que \href{https://en.wikipedia.org/wiki/Wordle}{Wikipedia} décrit comme
   comme un jeu de lettres en ligne extrêmement populaire, créé et développé par l'ingénieur logiciel gallois Josh Wardle. Ce paquet
   est une version améliorée d'une des solutions à une question posée par \textcolor{FireBrick}{valerio\_new} sur \href{https://tex.stackexchange.com/questions/659860/wordle-like-colored-letter-boxes-in-latex/660056#660056}{tex.stackexchange.com}.
-  
-  Ce paquet fournit l'environnement \keyword{wordle}, qui utilise la syntaxe :
 
-  \begin{tcblisting}{
-    listing only,
-    skin=bicolor,
-    colframe=MediumSeaGreen,
-    colbacklower=OldLace,
-    colback=LawnGreen!20,
-    listing style=tikz,
-    boxsep = 0pt,
-  }
-  % \usepackage{wordle}
-  \begin{wordle}[params wordle]{solution}[commandes tikz optionnelles]
-    essai1 essai2 ...
-  \end{wordle}
-  \end{tcblisting}
-  \index{environnement!wordle}
-  \index{wordle}
-
-  et l'environnement \keyword{GrilleSutom}, pour la version française du jeu :
+  Ce paquet fournit l'environnement \keyword{GrilleSutom}, qui utilise la syntaxe :
 
   \begin{tcblisting}{
     listing only,
@@ -260,15 +241,26 @@
   \index{GrilleSutom}
   \index{sutom}
 
-  Les mots du puzzle peuvent être saisis sur une seule ligne ou sur des lignes séparées. Voici quelques exemples :
+  et l'environnement \keyword{wordle}, pour la version anglaise du jeu :
 
-  \begin{example}
-  \begin{wordle}{SUTOM}
-    SAUCE
-    SAUTS
-    SUTOM
+  \begin{tcblisting}{
+    listing only,
+    skin=bicolor,
+    colframe=MediumSeaGreen,
+    colbacklower=OldLace,
+    colback=LawnGreen!20,
+    listing style=tikz,
+    boxsep = 0pt,
+  }
+  % \usepackage{wordle}
+  \begin{wordle}[params wordle]{solution}[commandes tikz optionnelles]
+    essai1 essai2 ...
   \end{wordle}
-  \end{example}
+  \end{tcblisting}
+  \index{environnement!wordle}
+  \index{wordle}
+
+  Les mots du puzzle peuvent être saisis sur une seule ligne ou sur des lignes séparées. Voici quelques exemples :
 
   \begin{example}
   %Version fr du wordle (sutom)
@@ -279,12 +271,24 @@
   \end{GrilleSutom}
   \end{example}
 
-  Comme pour les puzzles en ligne, l'environnement \keyword{wordle}
+  \begin{example}
+  \begin{wordle}{SUTOM}
+    SAUCE
+    SAUTS
+    SUTOM
+  \end{wordle}
+  \end{example}
+
+  Comme pour les puzzles en ligne, l'environnement \keyword{GrilleSutom}
   colore automatiquement les lettres en
-  \keyword[colback=WordleCorrect,colupper=White]{green}
-  lorsque la lettre se trouve dans la même position que la solution, et en 
-  \keyword[colback=WordlePresent,colupper=White]{gold} lorsque la lettre est dans la solution mais qu'elle n'est pas bien placée. Comme
-  décrites ci-dessous, ces couleurs peuvent être modifiées en fonction de vos goûts.
+  \keyword[colback=WordleSutomCorrect,colupper=White]{rouge}
+  lorsque la lettre se trouve dans la même position que la solution, et en
+  \keyword[colback=WordlePresent,colupper=White]{or} lorsque la lettre est dans la solution mais qu'elle n'est pas bien placée.
+  De même, \keyword{GrilleSutom} colore les lettres correctes en
+  \keyword[colback=WordleCorrect,colupper=White]{vert}
+  et les lettres actuelles en
+  \keyword[colback=WordleCorrect,colupper=White]{or}.
+  Comme décrites ci-dessous, ces couleurs peuvent être modifiées en fonction de vos goûts.
 
   Le nombre de lettres du puzzle est déterminé par la solution, et n'est limité que par la largeur de la page.
 
@@ -297,17 +301,17 @@
   \end{example}
 
   Les lettres du puzzle peuvent être saisies en majuscules, en minuscules ou en mélange de majuscules et de minuscules. Par défaut, la casse des lettres est ignorée lors de la détermination des couleurs des cases de lettres.
-  
+
   Comme décrit ci-dessous, les environnements \keyword{wordle} et \keyword{GrilleSutom} acceptent une liste d'options différentes qui modifient les couleurs, les polices et les formes de la tuile. De plus, vous pouvez modifier la sensibilité à la casse des environnements, ajouter des lignes supplémentaires au puzzle, désactiver la mise en forme spéciale des \textit{cases de lettres}. Ces options sont données sous la forme d'une liste séparée par des virgules de paires \texttt{clé-valeur}. Elles peuvent être définies localement, en utilisant l'argument optionnel de l'environnement \keyword|wordle|, ou globalement (plus précisément, dans le groupe \LaTeX\ actuel) en utilisant la commande \keyword{\ParamsSutom} \index{\textbackslash ParamsSutom}, ou comme options globales du package, via \keyword{\usepackage[options]{wordle}}. L'ordre des options n'a pas d'importance, sauf que les options ultérieures ont priorité sur les options précédentes, à l'exception des clés \option{tikz} et \option{tile style} qui sont toujours appliquées en dernier.
-  
+
   Les puzzles \keyword{wordle} sont dessinés à l'aide de \ctan{TikZ}, chaque lettre du puzzle étant placée à l'intérieur d'un nœud \ctan{TikZ}. De nombreuses options contrôlent les paramètres de ces nœuds. Les descriptions des options ci-dessous sont regroupées en fonction de leur fonction.
-  
+
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \Section{Styles Wordle}
 
   La clé \option{Style} peut être utilisée pour modifier de nombreuses caractéristiques des cases dans un puzzle \keyword{wordle}, y compris leurs couleurs, les polices et ainsi de suite. Les paramètres les plus courants peuvent être définis à l'aide du mot-clé \option{style}. \textit{Le style doit toujours être défini en premier car, sinon, les paramètres de style peuvent remplacer les paramètres précédents.}
-  
-  Les styles suivants sont pris en charge : 
+
+  Les styles suivants sont pris en charge :
 
   \textcolor{DarkOrange}{sutom}
   \index{Style!sutom}
@@ -322,7 +326,7 @@
   \end{example}
 
   En plus de définir les couleurs des cases, les cadres et les formes, le style \textsf{sutom} définit également la taille des cases à 8 mm. Le style \textsf{sutom} est le style par défaut pour l'environnement \keyword{GrilleSutom}.
-  
+
   \textcolor{DarkOrange}{standard}
   \index{style!standard}
 
@@ -349,19 +353,19 @@
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \Section{Options pour les styles individuels des cases de lettres}
-  
+
   Il existe quatre types de cases de lettres dans \keyword{wordle} :
   \option{absent}, \option{present}, \option{correct} et
   \option{vide}, correspondant respectivement aux lettres qui ne sont pas dans la solution,
   aux lettres mal placées, aux lettres correctement placées et aux cases vides. Les options de cette section peuvent être utilisées pour
   définir les couleurs du texte, des cases et des bordures, les formes et les cadres de ces cases.
-  
+
   Les cases de lettres dans un environnement \keyword{wordle} sont composées à l'intérieur
   d'un \keyword{\node} \ctan{TikZ}. Les options ci-dessous contrôlent les
   différents paramètres de style de ces nœuds.
-  
+
   \option[--]{Couleurs}[liste de couleurs valides séparées par des virgules]
-  
+
   L'option \option{Couleurs} est un raccourci pour spécifier les
   couleurs des cases \option{absent}, \option{present}, \option{correct} et
   \option{vide}, dans cet ordre. Les couleurs suivantes peuvent être omises, mais
@@ -391,7 +395,7 @@
 
   de manière similaire à l'option  \option{Couleurs}, il s'agit d'un raccourci pour le paramétrage des couleurs des bordures des cases \option{absent}, \option{present},
   \option{correct} et \option{vide}, dans cet ordre.
-  
+
   Si une seule couleur est donnée, elle est appliquée à toutes les cases.
 
   \begin{example}
@@ -402,7 +406,7 @@
   \end{wordle}
   \end{example}
 
-  Les bordures pour les cases individuelles peuvent être paramétrer via 
+  Les bordures pour les cases individuelles peuvent être paramétrer via
   \option{bordure absent}, \option{bordure present}, \option{bordure correct} et \option{bordure vide}.
 
   \option[false]{Cadres}[liste de booléens true/false séparées par des virgules]
@@ -435,7 +439,7 @@
 
   Les formes individuelles peuvent être paramétrer via \option{forme absent}, \option{forme present},
   \option{forme correct} et \option{forme vide}.
-  
+
   Les formes proposés par le package \ctan{TikZ}
   \texttt{shapes.geometric}, incluant \texttt{diamond},
   \texttt{ellipse}, \texttt{trapezium} et \texttt{star} (voir section~71.2 du manuel \ctan{TikZ}).
@@ -493,7 +497,7 @@
 
   \option[\textbackslash Large\textbackslash bfseries\textbackslash sffamily]{Police}
        [Police \LaTeX]
-  
+
   Cela permet de paramétrer la police de toutes les lettres. Toute commande valide est acceptée.
 
   \begin{example}
@@ -657,9 +661,9 @@
   \index{case~sensitive!upper case}
 
   Par défaut, les lettres peuvent être écrites en majuscule ou en minuscule, comme saisies par l'utilisateur.
-  
+
   L'option (voir doc en anglais) \option{case~sensitive} permet de spécifier un paramétrage de la casse.
-  
+
   \begin{example}
   \begin{wordle}[case sensitive=false]{youth} % par defaut
     North
@@ -675,9 +679,9 @@
     Youth
   \end{wordle}
   \end{example}
-  
+
   Les options \textit{fines} \option{natural case} (défaut), \option{lower case}et \option{upper case} permettent de travailler plus finement sur la casse des lettres correctes et/ou mal placées.
-  
+
   \begin{example}
   \begin{wordle}[lower case]{YOUTH}
     North
@@ -706,7 +710,7 @@
   \Section{Style \ctan{TikZ} complémentaire}
 
   \option[]{tikz}[commandes TikZ]
-  
+
   \begin{example}
   % \usetikzlibrary{backgrounds}
   \begin{wordle}[
@@ -720,7 +724,7 @@
   \end{example}
 
   \pagebreak
-  
+
   \option[W]{Nom}
 
   \begin{example}
@@ -750,7 +754,7 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \Section{Le code}
 
-  Le package \keyword{wordle} est écrit en \LaTeX3.  Beaucoup de commentaires permettent d'expliciter le fonctionnement du code. La coloration automatique des cases est un exercice amusant en \LaTeX3, motivépar un message issu de 
+  Le package \keyword{wordle} est écrit en \LaTeX3.  Beaucoup de commentaires permettent d'expliciter le fonctionnement du code. La coloration automatique des cases est un exercice amusant en \LaTeX3, motivépar un message issu de
   \href{https://tex.stackexchange.com/questions/659860/wordle-like-colored-letter-boxes-in-latex/660056#660056}{tex.stackexchange.com}.
 
   Le dépôt \href{https://github.com/AndrewMathas/Wordle}{github} est disponible pour signaler tout bug.

@@ -229,7 +229,7 @@
   \index{environment!wordle}
   \index{wordle}
 
-  and the \keyword{GrilleSutom} environment, for the French version of
+  and the \keyword{GrilleSutom} environment, for \keyword{Sutom}, the French version of
   the games:
 
   \begin{tcblisting}{
@@ -255,6 +255,7 @@
 
   \begin{example}
   \begin{wordle}{ANVIL}
+    % English version of sutom (wordle)
     CRANE
     NATAL
     ANVIL
@@ -262,7 +263,7 @@
   \end{example}
 
   \begin{example}
-  % French version of the wordle (sutom)
+  % French version of wordle (sutom)
   \begin{GrilleSutom}{REBUS}
     ABRIS
     ROUTE
@@ -275,8 +276,12 @@
   \keyword[colback=WordleCorrect,colupper=White]{green}
   when the letter is in the same position as the solution, and as
   \keyword[colback=WordlePresent,colupper=White]{gold} when
-  the letter is in the solution but it is not in the correct position. As
-  described below, these colours can be changed to suit your tastes.
+  the letter is in the solution but it is not in the correct position.
+  Similarly, \keyword{GrilleSutom} colours the correct letters
+  \keyword[colback=WordleSutomCorrect,colupper=White]{red}
+  and the present letters
+  \keyword[colback=WordleSutomPresent,colupper=White]{gold}.
+  As described below, these colours can be changed to suit your tastes.
 
   The number of letters in the puzzle is determined by the solution,
   being constrained only by the page width.
