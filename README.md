@@ -1,6 +1,6 @@
 ![v![]()ersion](https://img.shields.io/github/v/tag/AndrewMathas/wordle?color=success&label=version)
-![LPPL](https://img.shields.io/badge/license-LPPLv1.3c-blueviolet.svg)
-![LaTeX](https://img.shields.io/badge/latex-20B2AA?logo=Latex)
+<a href="http://www.latex-project.org/lppl.txt"><img src="https://img.shields.io/badge/license-LPPLv1.3c-blueviolet.svg"></a>
+<a href="https://www.latex-project.org/"><img src="https://img.shields.io/badge/latex-20B2AA?logo=Latex"></a>
 
 # Wordle
 
@@ -17,7 +17,7 @@ This package provides the `wordle` environment, which uses the syntax:
 \end{wordle}
 ```
 
-Ce package fournit un moyen stupidement riche en fonctionnalités de créer des puzzles Wordle en LaTeX, que [Wikipedia](https://en.wikipedia.org/wiki/Wordle) décrit comme comme un jeu de lettres en ligne extrêmement populaire, créé et développé par l’ingénieur logiciel gallois Josh Wardle. 
+Ce package fournit un moyen stupidement riche en fonctionnalités de créer des puzzles **Wordle** en LaTeX, que [Wikipedia](https://en.wikipedia.org/wiki/Wordle) décrit comme comme un jeu de lettres en ligne extrêmement populaire, créé et développé par l'ingénieur logiciel gallois Josh Wardle. 
 
 ```tex
 % \usepackage{wordle}

@@ -10,16 +10,14 @@
 
 % Package version
 \def\wordle@version{0.3.0}
-\def\wordle@release{2024-08-20}
+\def\wordle@release{2024-08-18}
 
 \providecommand\DeclareRelease[3]{}
 \providecommand\DeclareCurrentRelease[2]{}
 \DeclareRelease{\wordle@version}{\wordle@release}{wordle.sty}
 \DeclareCurrentRelease{}{\wordle@release}
 
-\ProvidesExplPackage{wordle}
-  {\wordle@release}
-  {\wordle@version}
+\ProvidesExplPackage{wordle} {\wordle@release} {\wordle@version}
   {A latex package for typesetting wordle puzzles}
 
 % ----------------------------------------------------------------
@@ -135,7 +133,6 @@
           \__wordle_set_style:nn {frame}  {false,true,false,false}
           \__wordle_set_style:nn {shape}  {rectangle,circle,rectangle,circle}
           \__wordle_set_style:nn {text}   {white,white,white,black}
-          \dim_set:Nn \l__wordle_size_dim {1cm}
           \tl_set:Nn  \l_wordle_font_tl {\LARGE\bfseries\sffamily}
 
         }
@@ -147,7 +144,6 @@
           \__wordle_set_style:nn {frame}  {false,true,false,false}
           \__wordle_set_style:nn {shape}  {rectangle,circle,rectangle,circle}
           \__wordle_set_style:nn {text}   {white,white,white,black}
-          \dim_set:Nn \l__wordle_size_dim {1cm}
           \tl_set:Nn  \l_wordle_font_tl {\LARGE\bfseries\sffamily}
         }
     }
