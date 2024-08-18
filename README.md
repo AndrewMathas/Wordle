@@ -17,7 +17,7 @@ This package provides the `wordle` environment, which uses the syntax:
 \end{wordle}
 ```
 
-Ce package fournit un moyen stupidement riche en fonctionnalit ́es de cr ́eer des puzzles Wordle en LaTeX, que [Wikipedia](https://en.wikipedia.org/wiki/Wordle) d ́ecrit comme comme un jeu de lettres en ligne extrˆemement populaire, cr ́e ́e et d ́evelopp ́e par l’ing ́enieur logiciel gallois Josh Wardle. 
+Ce package fournit un moyen stupidement riche en fonctionnalités de créer des puzzles Wordle en LaTeX, que [Wikipedia](https://en.wikipedia.org/wiki/Wordle) décrit comme comme un jeu de lettres en ligne extrêmement populaire, créé et développé par l’ingénieur logiciel gallois Josh Wardle. 
 
 ```tex
 % \usepackage{wordle}
