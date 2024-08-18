@@ -193,23 +193,23 @@
         \seq_set_from_clist:Nn \l_tmpa_seq {#1}
         \seq_map_inline:Nn \l_tmpa_seq { \__wordle_apply_style:n { \str_lowercase:n{##1}} }
     },
-    Style          .code:n     = {
-        \seq_set_from_clist:Nn \l_tmpa_seq {#1}
-        \seq_map_inline:Nn \l_tmpa_seq { \__wordle_apply_style:n { \str_lowercase:n{##1}} }
-    },
+    Style          .meta:n     = { style = #1 },
     style          .initial:n  = standard,
+    Style          .initial:n  = sutom,
 
     % specifying tile colours and shapes
     borders        .code:n     = { \__wordle_set_style:nn {border} {#1} },
     BorderColor    .code:n     = { \__wordle_set_style:nn {border} {#1} },
-    CouleurBordure .code:n     = { \__wordle_set_style:nn {border} {#1} },
+    CouleurBordures.code:n     = { \__wordle_set_style:nn {border} {#1} },
 
     Couleurs       .code:n     = { \__wordle_set_style:nn {colour} {#1} },
     colours        .code:n     = { \__wordle_set_style:nn {colour} {#1} },
 
     frames         .code:n     = { \__wordle_set_style:nn {frame}  {#1} },
+    Cadres         .code:n     = { \__wordle_set_style:nn {frame}  {#1} },
     frames         .default:n  = true,
     shapes         .code:n     = { \__wordle_set_style:nn {shape}  {#1} },
+    Formes         .code:n     = { \__wordle_set_style:nn {shape}  {#1} },
 
     % text colour
     text           .code:n     = { \__wordle_set_style:nn {text}   {#1} },
@@ -224,43 +224,64 @@
       \tl_set:Nn \l__wordle_align_tl {}
       \tl_set:Nn \l__wordle_depth_tl {}
     },
+    nonalign          .meta:n     = { noalign },
     align          .initial:n  = {true},
 
     absent         .tl_set:N   = \l__wordle_absent_colour_tl,
     absent~color   .tl_set:N   = \l__wordle_absent_colour_tl,
+    couleur~absent .tl_set:N   = \l__wordle_absent_colour_tl,
     absent~colour  .tl_set:N   = \l__wordle_absent_colour_tl,
+    bordure~absent .tl_set:N   = \l__wordle_absent_border_tl,
     absent~border  .tl_set:N   = \l__wordle_absent_border_tl,
-    absent~frame  .tl_set:N    = \l__wordle_absent_frame_tl,
-    absent~frame  .default:n   = true,
+    absent~frame   .tl_set:N    = \l__wordle_absent_frame_tl,
+    cadre~absent   .tl_set:N    = \l__wordle_absent_frame_tl,
+    absent~frame   .default:n   = true,
     absent~shape   .tl_set:N   = \l__wordle_absent_shape_tl,
+    forme~absent   .tl_set:N   = \l__wordle_absent_shape_tl,
     absent~text    .tl_set:N   = \l__wordle_absent_text_tl,
+	coultxt~absent .tl_set:N   = \l__wordle_absent_text_tl,
 
     correct        .tl_set:N   = \l__wordle_correct_colour_tl,
     correct~color  .tl_set:N   = \l__wordle_correct_colour_tl,
     correct~colour .tl_set:N   = \l__wordle_correct_colour_tl,
+    couleur~correct.tl_set:N   = \l__wordle_correct_colour_tl,
     correct~border .tl_set:N   = \l__wordle_correct_border_tl,
-    correct~frame .tl_set:N    = \l__wordle_correct_frame_tl,
+    bordure~correct.tl_set:N   = \l__wordle_correct_border_tl,
+    correct~frame  .tl_set:N    = \l__wordle_correct_frame_tl,
+    cadre~correct  .tl_set:N    = \l__wordle_correct_frame_tl,
     correct~frame .default:n   = true,
     correct~shape  .tl_set:N   = \l__wordle_correct_shape_tl,
+	forme~correct  .tl_set:N   = \l__wordle_correct_shape_tl,
     correct~text   .tl_set:N   = \l__wordle_correct_text_tl,
+	coultxt~correct.tl_set:N   = \l__wordle_correct_text_tl,
 
-    empty       .tl_set:N     = \l__wordle_empty_colour_tl,
+    empty        .tl_set:N     = \l__wordle_empty_colour_tl,
+    couleur~vide .tl_set:N     = \l__wordle_empty_colour_tl,
     empty~color  .tl_set:N     = \l__wordle_empty_colour_tl,
     empty~colour .tl_set:N     = \l__wordle_empty_colour_tl,
     empty~border .tl_set:N     = \l__wordle_empty_border_tl,
-    empty~frame .tl_set:N      = \l__wordle_empty_frame_tl,
-    empty~frame .default:n     = true,
+    bordure~vide .tl_set:N     = \l__wordle_empty_border_tl,
+    empty~frame  .tl_set:N      = \l__wordle_empty_frame_tl,
+    cadre~vide   .tl_set:N      = \l__wordle_empty_frame_tl,
+    empty~frame  .default:n     = true,
     empty~shape  .tl_set:N     = \l__wordle_empty_shape_tl,
+    forme~vide   .tl_set:N     = \l__wordle_empty_shape_tl,
     empty~text   .tl_set:N     = \l__wordle_empty_text_tl,
+	coultxt~vide. tl_set:N     = \l__wordle_empty_text_tl,
 
     present        .tl_set:N   = \l__wordle_present_colour_tl,
+    couleur~present.tl_set:N   = \l__wordle_present_colour_tl,
     present~color  .tl_set:N   = \l__wordle_present_colour_tl,
     present~colour .tl_set:N   = \l__wordle_present_colour_tl,
     present~border .tl_set:N   = \l__wordle_present_border_tl,
-    present~frame .tl_set:N    = \l__wordle_present_frame_tl,
-    present~frame .default:n   = true,
+    bordure~present.tl_set:N   = \l__wordle_present_border_tl,
+    present~frame  .tl_set:N    = \l__wordle_present_frame_tl,
+    cadre~present  .tl_set:N    = \l__wordle_present_frame_tl,
+    present~frame  .default:n   = true,
     present~shape  .tl_set:N   = \l__wordle_present_shape_tl,
+    forme~present  .tl_set:N   = \l__wordle_present_shape_tl,
     present~text   .tl_set:N   = \l__wordle_present_text_tl,
+	coultxt~present.tl_set:N   = \l__wordle_present_text_tl,
 
     % text font
     font           .tl_set:N   = \l__wordle_font_tl,
@@ -270,27 +291,30 @@
 
     % tile size
     size           .dim_set:N  = \l__wordle_size_dim,
+    Taille         .dim_set:N  = \l__wordle_size_dim,
     size           .initial:n  = 8mm,
 
     % thickness of tile border
     thickness      .dim_set:N  = \l__wordle_thickness_dim,
+    Epaisseur      .dim_set:N  = \l__wordle_thickness_dim,
     Thick          .code:n     = {\dim_set:Nn \l__wordle_thickness_dim {#1mm}},
-    Epaisseur      .code:n     = {\dim_set:Nn \l__wordle_thickness_dim {#1mm} },
     thickness      .initial:n  = 0.25mm,
 
     % rounded-corner = #
     rounded        .dim_set:N  = \l__wordle_rounded_dim,
+    Arrondi        .dim_set:N  = \l__wordle_rounded_dim,
     rounded        .default:n  = 4pt,
     Rounded        .code:n     = {\dim_set:Nn \l__wordle_rounded_dim {#1mm}},
-    Arrondi        .code:n     = {\dim_set:Nn \l__wordle_rounded_dim {#1mm}},
     rounded        .initial:n  = 1mm,
 
     % separation between tiles
     separation     .dim_set:N  = \l__wordle_sep_dim,
+    Separation     .dim_set:N  = \l__wordle_sep_dim,
     separation     .initial:n  = 0.5mm,
 
     % rescale tiles
     scale          .code:n     = { \__wordle_rescale:n {#1} },
+    Echelle        .code:n     = { \__wordle_rescale:n {#1} },
     scale          .initial:n  = 1,
     Unit           .code:n     = { \__wordle_rescale:n {#1} },
     Unite          .code:n     = { \__wordle_rescale:n {#1} },
@@ -304,6 +328,7 @@
     letters        .code:n     = {\cs_set_eq:NN \__wordle_letter:n \__wordle_letter_natural:n},
     Lettres        .code:n     = {\cs_set_eq:NN \__wordle_letter:n \__wordle_letter_natural:n},
     noletters      .code:n     = {\cs_set_eq:NN \__wordle_letter:n \__wordle_letter_none:n},
+    NonLettres     .code:n     = {\cs_set_eq:NN \__wordle_letter:n \__wordle_letter_none:n},
     letters        .initial:n  = true,
 
     % forced letter case
@@ -321,17 +346,21 @@
 
     % puzzle specs: rows and columns
     rows           .int_set:N  = \l__wordle_rows_int,
+    Lignes         .int_set:N  = \l__wordle_rows_int,
     rows           .initial:n  = 0,
 
     strict         .bool_set:N = \l__wordle_strict_bool,
+    Strict         .bool_set:N = \l__wordle_strict_bool,
     strict         .default:n  = true,
     strict         .initial:n  = false,
 
     % tikz settings
     tile~style     .tl_set:N   = \l__wordle_tile_style_tl,
+    Style~case     .tl_set:N   = \l__wordle_tile_style_tl,
     tile~style     .initial:n  = ,
 
     name           .tl_set:N   = \l__wordle_name_tl,
+    Nom            .tl_set:N   = \l__wordle_name_tl,
     name           .initial:n  = W,
     tikz           .tl_set:N   = \l__wordle_tikz_tl,
     tikz           .initial:n  = ,
@@ -339,6 +368,7 @@
 
 % user settings
 \NewDocumentCommand\WordleSetup{ m }{ \keys_set:nn { wordle } {#1} }
+\NewDocumentCommand\ParamsSutom{ m }{ \keys_set:nn { wordle } {#1} }
 
 % ----------------------------------------------------------------
 % Define TikZ Wordle styles for the letters. Using tikz styles both
@@ -362,7 +392,7 @@
         /Wordle/tile=#1,
         /tikz,         % change back to using tikz keys
         draw  = \tl_use:c{l__wordle_#1_border_tl},
-        minimum~size   = {\l__wordle_size_dim+0.5pt},
+        minimum~size   = {\l__wordle_size_dim+\l__wordle_thickness_dim},
         fill  = \tl_use:c {l__wordle_#1_colour_tl},
         shape = rectangle,
     },
@@ -607,8 +637,7 @@
 % wrapper environment for GrilleSutom
 \NewDocumentEnvironment{GrilleSutom}{ O{} m O{} b }
   {
-    \WordleSetup{style=sutom,size=1cm}
-    \begin{wordle}[#1]{#2}[#3]#4\end{wordle}
+    \begin{wordle}[style=sutom,#1]{#2}[#3]#4\end{wordle}
   }
   {}
 
@@ -618,7 +647,7 @@
 % CHANGE LOG
 %
 % Version 0.3 - \wordle@release
-%    - merged AM & CP packages, adding styles and streamlining options
+%    - merged AM & CP packages, adding styles and streamlining options, french keys
 %
 % Version 0.2 - \wordle@release
 %    - added documentation and cleaned some of the options

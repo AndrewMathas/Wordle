@@ -1,423 +1,761 @@
-% !TeX TXS-program:compile = txs:///arar% arara: pdflatex: {shell: yes, synctex: no, interaction: batchmode}
-% arara: pdflatex: {shell: yes, synctex: no, interaction: batchmode} if found('log', '(undefined references|Please rerun|Rerun to get)')
+% !TeX TS-program = pdflatex
 
-\documentclass[french,a4paper,11pt]{article}
-\usepackage[margin=2cm,includefoot]{geometry}
-\def\TPversion{0.2.0}
-\def\TPdate{8 août 2024}
-\usepackage{amssymb,amsfonts,amsmath}
+\documentclass[svgnames]{report}
 \usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
 \usepackage{wordle}
-\usepackage{awesomebox}
-\usepackage{fontawesome5}
-\usepackage{footnote}
-\makesavenoteenv{tabular}
+\usepackage{manfnt}
 \usepackage{enumitem}
-\usepackage{tabularray}
-\usepackage{fancyvrb}
-\usepackage{fancyhdr}
-\fancyhf{}
-\renewcommand{\headrulewidth}{0pt}
-\lfoot{\sffamily\small [wordle]}
-\cfoot{\sffamily\small - \thepage{} -}
-\rfoot{\hyperlink{matoc}{\small\faArrowAltCircleUp[regular]}}
+\setlist[description]{font=\sffamily\bfseries\color{ForestGreen},labelwidth=\textwidth}
+\usepackage{booktabs}
+\usepackage[a4paper,margin=18mm]{geometry}
+\synctex=1
+\parindent=0pt
+\parskip=2mm
 
-%\usepackage{hvlogos}
-\usepackage{hologo}
-\providecommand\tikzlogo{Ti\textit{k}Z}
-\providecommand\TeXLive{\TeX{}Live\xspace}
-\providecommand\PSTricks{\textsf{PSTricks}\xspace}
-\let\pstricks\PSTricks
-\let\TikZ\tikzlogo
-\newcommand\TableauDocumentation{%
-	\begin{tblr}{width=\linewidth,colspec={X[c]X[c]X[c]X[c]X[c]X[c]},cells={font=\sffamily}}
-		{\LARGE \LaTeX} & & & & &\\
-		& {\LARGE \hologo{pdfLaTeX}} & & & & \\
-		& & {\LARGE \hologo{LuaLaTeX}} & & & \\
-		& & & {\LARGE \TikZ} & & \\
-		& & & & {\LARGE \TeXLive} & \\
-		& & & & & {\LARGE \hologo{MiKTeX}} \\
-	\end{tblr}
+\usepackage{cmap} % fix search and cut-and-paste in Acrobat
+\setcounter{secnumdepth}{0}
+
+\usepackage{listings}\lstset{language=[LaTeX]TeX,framerule=2pt}
+\lstset{language=[LaTeX]TeX,
+        texcsstyle=*\bfseries\color{Peru},
+        backgroundcolor=\color{Ivory},
+        numbers=none,
+        breaklines=true,
+        keywordstyle=\color{Sienna},
+        commentstyle=\color{BurlyWood},
+        tabsize=2,
+        morekeywords={Wordle,wordle,GrilleSutom},
+        resetmargins=true,
+}
+% hyperref links to ctan
+\newcommand\ctan[1]{\href{https://www.ctan.org/pkg/#1}{\texttt{#1}}}
+
+\newcommand\Section[1]{\subsection{\textcolor{DarkGreen}{#1}}}
+
+\ExplSyntaxOn
+\NewDocumentCommand\option{ omo }{%
+  \IfNoValueTF{#1}{\textsf{#2}}
+  {%
+    \textbf{\textcolor{Crimson}{#2}}
+    \str_if_empty:nF {#1}{~(défaut~:~\textcolor{DarkRed}{#1})}%
+    \IfNoValueF{#3}{\hfill\textcolor{Gray}{[accepte~:~#3]}}%
+  }%
+  \index{#2}%
+}
+\ExplSyntaxOff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{imakeidx}
+\indexsetup{level=\section*, toclevel=section, noclearpage}
+\makeindex[intoc,columns=3]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[skins,listings]{tcolorbox}
+\usetikzlibrary{backgrounds, shapes.geometric} % for tikz={framed,...}
+
+\DeclareTotalTCBox\keyword{ O{} v }{
+  fontupper=\sffamily,
+  nobeforeafter,
+  skin=tile,
+  verbatim,
+  on line,
+  tcbox raise base,
+  top=0pt,bottom=0pt,left=0mm,right=0mm,
+  colback=OldLace,
+  colupper=ForestGreen,
+  #1}
+{#2}
+
+\lstdefinestyle{tikz}{style=tcblatex,
+  classoffset=0,
+  texcsstyle=*\color{DarkGoldenrod},%
+  deletetexcs={begin, end},
+  moretexcs={,%
+    node,
+    draw,
+    true,
+    false
+  },%
+  classoffset=1,
+  keywordstyle=\color{ForestGreen},%
+  morekeywords={wordle,GrilleSutom},
+  classoffset=2,
+  keywordstyle=\color{Crimson},%
+  morekeywords={
+    absent,
+    Strict,
+    Taille,
+    Lignes,
+    Epaisseur,
+    align,
+    border,
+    borders,
+    Bords,
+    Cadres,
+    Style,
+    Formes,
+    Separation,
+    case,
+    Police,
+    Arrondi,
+    Echelle,
+    NonLettres,
+    color,
+    Couleurs,
+    CouleurBordures,
+    CouleurLettres,
+    bordure,
+    couleur,
+    colours,
+    correct,
+    vide,
+    font,
+    frame,
+    frames,
+    letters,
+    lower,
+    name,
+    natural,
+    noalign,
+    noletters,
+    present,
+    rounded,
+    rows,
+    scale,
+    sensitive,
+    separation,
+    shape,
+    shapes,
+    size,
+    strict,
+    style,
+    style,
+    text,
+    thickness,
+    tikz,
+    tile,
+    upper,
+  },
+  classoffset=3,
+  keywordstyle=\color{DarkOrange},%
+  morekeywords={
+    hard,
+    standard,
+    sutom,
+  }
 }
 
-\usepackage{hyperref}
-\urlstyle{same}
-\hypersetup{pdfborder=0 0 0}
-\setlength{\parindent}{0pt}
-\definecolor{LightGray}{gray}{0.9}
-
-\usepackage{babel}
-\AddThinSpaceBeforeFootnotes
-\FrenchFootnotes
-
-\usepackage{listings}
-
-\usepackage{newverbs}
-\newverbcommand{\motcletex}{\color{cyan!75!black}}{}
-\newverbcommand{\packagetex}{\color{violet!75!black}}{}
-
-\usepackage[most]{tcolorbox}
-\tcbuselibrary{listingsutf8}
-\newtcblisting{DemoCode}[1][]{%
-	enhanced,width=0.95\linewidth,center,%
-	bicolor,size=title,%
-	colback=cyan!2!white,%
-	colbacklower=cyan!1!white,%
-	colframe=cyan!75!black,%
-	listing options={%
-		breaklines=true,%
-		breakatwhitespace=true,%
-		style=tcblatex,basicstyle=\small\ttfamily,%
-		tabsize=4,%
-		commentstyle={\itshape\color{gray}},
-		keywordstyle={\color{blue}},%
-		classoffset=0,%
-		keywords={},%
-		alsoletter={-},%
-		keywordstyle={\color{blue}},%
-		classoffset=1,%
-		alsoletter={-},%
-		morekeywords={center,justify},%
-		keywordstyle={\color{violet}},%
-		classoffset=2,%
-		alsoletter={-},%
-		morekeywords={GrilleSutom},%
-		keywordstyle={\color{green!50!black}},%
-		classoffset=3,%
-		morekeywords={Couleurs,Arrondi,Unite,Police,CouleurLettres,Lettres,Style,Epaisseur,CouleurBordure},%
-		keywordstyle={\color{orange}}
-	},%
-	#1
+\DeclareTCBListing{example}{ !O{} }{%
+  skin=bicolor,
+  colframe=MediumSeaGreen,
+  colbacklower=OldLace,
+  colback=LawnGreen!20,
+  lefthand width=50mm,
+  listing style=tikz,
+  sidebyside,
+  sidebyside align=center,
+  sidebyside gap=4mm,
+  text and listing,
+  text outside listing,
+  boxsep = 0pt,
+  #1
 }
 
-\tcbset{vignettes/.style={%
-	nobeforeafter,box align=base,boxsep=0pt,enhanced,sharp corners=all,rounded corners=southeast,%
-	boxrule=0.75pt,left=7pt,right=1pt,top=0pt,bottom=0.25pt,%
-	}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\makeatletter
+\author{Andrew Mathas \&\ Cédric Pierquet}
+\usepackage{tikz}
+\usetikzlibrary{shadows.blur}
+\tikzset{shadowed/.style={blur shadow={shadow blur steps=5},
+                          bottom color=ForestGreen!30,
+                          draw=MediumSeaGreen!70,
+                          shade,
+                          font=\normalfont\Huge\bfseries\scshape,
+                          rounded corners=8pt,
+                          top color=SeaGreen,
+      },
+      boxes/.style={draw=SeaGreen,
+                    fill=Cornsilk,
+                    font=\sffamily\small,
+                    inner sep=5pt,
+                    rectangle,
+                    rounded corners=8pt,
+                    text=DarkGreen,
+     }
+}
+\newcommand\Wordle{%
+  \begin{tikzpicture}[remember picture,overlay]
+      \node[yshift=-3cm] at (current page.north west)
+        {\begin{tikzpicture}[remember picture, overlay]
+          \draw[shadowed](30mm,0) rectangle node[white]{wordle} (\paperwidth-30mm,16mm);
+          \node[anchor=west,boxes] at (4cm,0cm) {\@author};
+          \node[anchor=east,boxes] at (\paperwidth-4cm,0) {Version \wordle@version};
+         \end{tikzpicture}
+        };
+   \end{tikzpicture}
+   \vspace*{20mm}
 }
 
-\tcbset{vignetteMaJ/.style={%
-	fontupper={\vphantom{pf}\footnotesize\ttfamily},
-	vignettes,colframe=purple!50!black,coltitle=white,colback=purple!10,%
-	overlay={\begin{tcbclipinterior}%
-			\fill[fill=purple!75]($(interior.south west)$) rectangle node[rotate=90]{\tiny \sffamily{\textcolor{black}{\scalebox{0.66}[0.66]{\textbf{MàJ}}}}} ($(interior.north west)+(5pt,0pt)$);%
-	\end{tcbclipinterior}}
-	}
-}
+\def\@oddfoot{\textsc{Wordle} --- \wordle@version~(version~du~\wordle@release)\hfill\thepage}
 
-\newcommand\Cle[1]{{\small\sffamily\textlangle \textcolor{orange}{#1}\textrangle}}
-\newcommand\cmaj[1]{\tcbox[vignetteMaJ]{#1}\xspace}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=MediumBlue]{hyperref}
+\hypersetup{
+  pdfcreator={ Generated by pdfLaTeX },
+  pdfinfo={
+    Author  ={ Andrew Mathas },
+    Keywords={ wordle },
+    License ={ LaTeX Project Public License v1.3c or later },
+    Subject ={ LaTeXing Wordle puzzles },
+    Title   ={ Wordle - \wordle@version }
+  },
+}
+\makeatother
 
 \begin{document}
 
-\setlength{\aweboxleftmargin}{0.07\linewidth}
-\setlength{\aweboxcontentwidth}{0.93\linewidth}
-\setlength{\aweboxvskip}{8pt}
-
-\pagestyle{fancy}
-
-\thispagestyle{empty}
-
-\vspace{2cm}
-
-\begin{center}
-	\begin{minipage}{0.75\linewidth}
-	\begin{tcolorbox}[colframe=yellow,colback=yellow!15]
-		\begin{center}
-			\begin{tabular}{c}
-				{\Huge \texttt{wordle} [fr]}\\
-				\\
-				{\LARGE Des grilles de Wordle (Sutom),} \\
-				\\
-				{\LARGE avec \textsf{Ti\textit{k}Z}.} \\
-			\end{tabular}
-
-			\bigskip
-
-			{\small \texttt{Version \TPversion{} -- \TPdate}}
-		\end{center}
-	\end{tcolorbox}
-\end{minipage}
-\end{center}
-
-\begin{center}
-	\begin{tabular}{c}
-	\texttt{Cédric Pierquet}\\
-	{\ttfamily c pierquet -- at -- outlook . fr}\\
-	\texttt{\url{https://github.com/cpierquet/wordle}}
-\end{tabular}
-\end{center}
-
-\vspace{0.25cm}
-
-{$\blacktriangleright$~~Créer des grilles de Wordle/Sutom\footnotemark\footnotetext{\url{https://fr.wikipedia.org/wiki/Wordle}}.}
-
-\vspace{0.25cm}
-
-{$\blacktriangleright$~~Gestion des couleurs, de la taille\footnotemark\footnotetext{Idées venant de  \url{ttps://tex.stackexchange.com/questions/659860/wordle-like-colored-letter-boxes-in-latex}}.
-
-\vspace{1cm}
-
-\begin{center}
-\begin{GrilleSutom}{LUCIOLE}
-	LAPINES
-	LUMIERE
-	LOURDES
-	LUCIOLE
-\end{GrilleSutom}
-\end{center}
-
-\medskip
-
-\begin{center}
-\begin{GrilleSutom}[Arrondi=0,Style=alt,Couleurs={lightgray,orange,teal},Unite=0.5,Lettres=false]{REBUS}
-	ABRIS
-	ROUTE
-	RUDES
-	REBUS
-\end{GrilleSutom}
-%
-\hspace{5mm}
-%
-\begin{GrilleSutom}[Arrondi=0,Style=alt,Couleurs={lightgray,orange,teal},Unite=0.5]{REBUS}
-	ABRIS
-	ROUTE
-	RUDES
-	REBUS
-\end{GrilleSutom}
-\end{center}
-
-\vspace{0.5cm}
-
-%\hfill{}\textit{Merci à Denis Bitouzé et à Gilles Le Bourhis pour leurs retours et idées !}
-
-\smallskip
-
-\vfill
-
-\hrule
-
-\medskip
-
-\TableauDocumentation
-
-\medskip
-
-\hrule
-
-\vspace*{1cm}
-
-\newpage
-
-\phantomsection
-\hypertarget{matoc}{}
-
-\tableofcontents
-
-\vfill
-
-\section{Historique}
-
-\verb|v0.2.0|~:~~~~Fusion des codes d'Andrew Mathas
-
-\verb|v0.1.1|~:~~~~Correction d'un bug avec la version anglaise.
-
-\verb|v0.1.0|~:~~~~Version initiale.
-
-\newpage
-
-\section{Le package wordle}
-
-\subsection{Le principe du jeu}
-
-\begin{noteblock}
-Wordle est un jeu de lettres en ligne gratuit développé en 2021 par Josh Wardle. Ce jeu est une adaptation directe du jeu télévisé américain Lingo (Motus en France) qui propose de faire deviner un mot par plusieurs tentatives, en indiquant pour chacune d'entre-elles la position des lettres bien placées et mal placées.
-
-Le but du jeu est de deviner un mot spécifique de cinq lettres en un maximum de six tentatives, en tapant des lettres sur un écran de six lignes de cinq cases chacune. La personne qui joue inscrit sur la première ligne un mot de cinq lettres de son choix et entre sa proposition. Après chaque proposition, les lettres apparaissent en couleurs : le fond gris représente les lettres qui ne se trouvent pas dans le mot recherché, le fond jaune représente les lettres qui se trouvent ailleurs dans le mot, et le fond vert représente les lettres qui se trouvent à la bonne place dans le mot à trouver.
-
-\smallskip
-
-\hfill{\scriptsize \url{https://fr.wikipedia.org/wiki/Wordle}}
-\end{noteblock}
-
-\subsection{Le package}
-
-\begin{noteblock}
-Le package propose de quoi afficher, dans son document \LaTeX, une grille de Wordle (ou de Sutom) à l'aide de \TikZ{} et d'une \motcletex!minipage!, avec la possibilité :
-
-\begin{itemize}
-	\item de spécifier les dimensions, la couleur ;
-	\item de choisir le style des lettres mal placées ;
-	\item de personnaliser les bordure et les coins ;
-	\item d'afficher ou non les lettres.
-\end{itemize}
-
-Contrairement au jeu \og initial \fg, il est possible de travailler avec des mots de longueur différente de 5 !
-\end{noteblock}
-
-%\begin{importantblock}
-%Une bonne partie du code, en \hologo{LaTeX3}, est issu d'un fil sur \texttt{tex.stackexchange}, et proposé par l'internaute \textsf{3141592653589793238}.
-%\end{importantblock}
-
-\subsection{Chargement du package, packages utilisés}
-
-\begin{importantblock}
-Le package se charge, de manière classique, dans le préambule.
-
-Il n'existe pas d'option pour le package, et \packagetex!xcolor! n'est pas chargé.
-\end{importantblock}
-
-\begin{DemoCode}[listing only]
-\documentclass{article}
-\usepackage{wordle}
-
-\end{DemoCode}
-
-\begin{noteblock}
-\packagetex!wordle! charge les packages suivants :
-
-\begin{itemize}
-	\item \packagetex!tikz!;
-	\item \packagetex!simplekv! ;
-	\item \packagetex!xstring!.
-\end{itemize}
-
-Il est compatible avec les compilations usuelles en \textsf{latex}, \textsf{pdflatex}, \textsf{lualatex} ou \textsf{xelatex}.
-\end{noteblock}
-
-\vfill~
-
-\pagebreak
-
-\section{Environnement GrilleSutom}
-
-\subsection{Fonctionnement global}
-
-\begin{cautionblock}
-L'environnement dédié à la création de la grille du Sutom est \packagetex!GrilleSutom!.
-
-Il fonctionne avec un système de clés, entre \texttt{[...]}, et nécessite de préciser :
-
-\begin{itemize}
-	\item le bon mot ;
-	\item les différentes propositions.
-\end{itemize}
-
-Le code se charge de mettre en forme (grâce à une \motcletex!minipage!) la grille et les différentes couleurs d'aide.
-\end{cautionblock}
-
-\begin{DemoCode}[listing only]
-\begin{GrilleSutom}[clés]{mot à trouver}
-	proposition n°1
-	proposition n°2
-	proposition n°3
-\end{GrilleSutom}
-\end{DemoCode}
-
-\begin{noteblock}
-Comme indiqué dans l'introduction, la grille est créée à l'aide d'un environnement \motcletex!minipage!, avec gestion automatique de la largeur et des espacements.
-\end{noteblock}
-
-\begin{DemoCode}[]
-%sortie par défaut
-\begin{GrilleSutom}{SUTOM}
-	SAUCE
-	SAUTS
-	SUTOM
-\end{GrilleSutom}
-\end{DemoCode}
-
-\subsection{Clés et options}
-
-\begin{tipblock}
-Le premier argument, optionnel et entre \texttt{[...]}, propose les \Cle{clés} suivantes :
-
-\begin{itemize}
-	\item \Cle{Couleurs} : = couleur des cases, sous la forme \Cle{fond,mal placée,bien placée} ;
-
-	\hfill{}défaut : \Cle{cyan!75!black,yellow,red},%
-	\item \Cle{Arrondi} := arrondi des coins, en mm ; \hfill{}défaut : \Cle{0.1}
-	\item \Cle{Unite} := largeur des cases, en cm ; \hfill{}défaut : \Cle{1}
-	\item \Cle{Police} := police des lettres ; \hfill{}défaut : \Cle{\textbackslash LARGE\textbackslash bfseries\textbackslash sffamily}
-	\item \Cle{CouleurLettres} := couleur des lettres ; \hfill{}défaut : \Cle{white}
-	\item \Cle{CouleurBordure} := couleur de la bordure des cases ; \hfill{}défaut : \Cle{white}
-	\item \Cle{Lettres} := booléen pour afficher les lettre ; \hfill{}défaut : \Cle{true}
-	\item \Cle{Style} := style parmi \Cle{rond / autre} pour changer le style ; \hfill{}défaut : \Cle{rond}
-	\item \Cle{Epaisseur} := épaisseur des traits, en mm. \hfill{}défaut : \Cle{0.25}
-\end{itemize}
-\vspace*{-\baselineskip}\leavevmode
-\end{tipblock}
-
-\begin{tipblock}
-Le second argument, obligatoire et entre \texttt{\{...\}} correspond au mot correct à trouver.
-
-\smallskip
-
-Les différentes propositions sont à donner (ligne par ligne ou séparées par des espaces) dans le corps de l'environnement.
-\end{tipblock}
-
-\subsection{Exemples}
-
-\begin{DemoCode}[]
-\begin{GrilleSutom}{BOURDON}
-	BALEINE
-	BOURBON
-	BROMURE
-	BOURDON
-\end{GrilleSutom}
-%
-\hspace{5mm}
-%
-\begin{GrilleSutom}[Style=alt]{BOURDON}
-	BALEINE BOURBON BROMURE BOURDON
-\end{GrilleSutom}
-\end{DemoCode}
-
-\begin{DemoCode}[]
-\begin{GrilleSutom}
-		[Style=alt,Epaisseur=0.3,CouleurBordure=black,%
-		Couleurs={lightgray,orange,teal}]%
-		{BOURDON}
-	BALEINE BOURBON BROMURE BOURDON
-\end{GrilleSutom}
-%
-\hspace{5mm}
-%
-\begin{GrilleSutom}
-	[Arrondi=0,Epaisseur=0.3,CouleurBordure=black,%
-	Couleurs={lightgray,orange,teal}]%
-	{BOURDON}
-	BALEINE BOURBON BROMURE BOURDON
-\end{GrilleSutom}
-\end{DemoCode}
-
-\begin{DemoCode}[]
-\begin{GrilleSutom}[Unite=2,Police=\Huge\ttfamily,CouleurLettres=black]{BOURDON}
-	BALEINE
-	BOURBON
-	BROMURE
-	BOURDON
-\end{GrilleSutom}
-\end{DemoCode}
-
-\begin{DemoCode}[]
-\begin{GrilleSutom}%
-		[Style=alt,Unite=0.75,Arrondi=0,%
-		Couleurs={cyan,orange,violet},Lettres=false]{REBUS}
-	ABRIS
-	ROUTE
-	RUDES
-	REBUS
-\end{GrilleSutom}
-\hspace{5mm}
-\begin{GrilleSutom}%
-		[Style=alt,Unite=0.75,Arrondi=0,Couleurs={cyan,orange,violet}]{REBUS}
-	ABRIS
-	ROUTE
-	RUDES
-	REBUS
-\end{GrilleSutom}
-\end{DemoCode}
+  \Wordle
+
+  Ce package fournit un moyen \textit{stupidement} riche en fonctionnalités de créer des puzzles \keyword{Wordle} en \LaTeX, que \href{https://en.wikipedia.org/wiki/Wordle}{Wikipedia} décrit comme
+  comme un jeu de lettres en ligne extrêmement populaire, créé et développé par l'ingénieur logiciel gallois Josh Wardle. Ce paquet
+  est une version améliorée d'une des solutions à une question posée par \textcolor{FireBrick}{valerio\_new} sur \href{https://tex.stackexchange.com/questions/659860/wordle-like-colored-letter-boxes-in-latex/660056#660056}{tex.stackexchange.com}.
+  
+  Ce paquet fournit l'environnement \keyword{wordle}, qui utilise la syntaxe :
+
+  \begin{tcblisting}{
+    listing only,
+    skin=bicolor,
+    colframe=MediumSeaGreen,
+    colbacklower=OldLace,
+    colback=LawnGreen!20,
+    listing style=tikz,
+    boxsep = 0pt,
+  }
+  % \usepackage{wordle}
+  \begin{wordle}[params wordle]{solution}[commandes tikz optionnelles]
+    essai1 essai2 ...
+  \end{wordle}
+  \end{tcblisting}
+  \index{environnement!wordle}
+  \index{wordle}
+
+  et l'environnement \keyword{GrilleSutom}, pour la version française du jeu :
+
+  \begin{tcblisting}{
+    listing only,
+    skin=bicolor,
+    colframe=MediumSeaGreen,
+    colbacklower=OldLace,
+    colback=LawnGreen!20,
+    listing style=tikz,
+    boxsep = 0pt,
+  }
+  % \usepackage{wordle}
+  \begin{GrilleSutom}[params sutom]{solution}[commandes tikz optionnelles]
+    essai1 essai2 ...
+  \end{GrilleSutom}
+  \end{tcblisting}
+  \index{environnement!GrilleSutom}
+  \index{GrilleSutom}
+  \index{sutom}
+
+  Les mots du puzzle peuvent être saisis sur une seule ligne ou sur des lignes séparées. Voici quelques exemples :
+
+  \begin{example}
+  \begin{wordle}{SUTOM}
+    SAUCE
+    SAUTS
+    SUTOM
+  \end{wordle}
+  \end{example}
+
+  \begin{example}
+  %Version fr du wordle (sutom)
+  \begin{GrilleSutom}{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{GrilleSutom}
+  \end{example}
+
+  Comme pour les puzzles en ligne, l'environnement \keyword{wordle}
+  colore automatiquement les lettres en
+  \keyword[colback=WordleCorrect,colupper=White]{green}
+  lorsque la lettre se trouve dans la même position que la solution, et en 
+  \keyword[colback=WordlePresent,colupper=White]{gold} lorsque la lettre est dans la solution mais qu'elle n'est pas bien placée. Comme
+  décrites ci-dessous, ces couleurs peuvent être modifiées en fonction de vos goûts.
+
+  Le nombre de lettres du puzzle est déterminé par la solution, et n'est limité que par la largeur de la page.
+
+  \begin{example}
+  \begin{wordle}[Lignes=4]{orange}
+     normal
+     ordres
+     orange
+  \end{wordle}
+  \end{example}
+
+  Les lettres du puzzle peuvent être saisies en majuscules, en minuscules ou en mélange de majuscules et de minuscules. Par défaut, la casse des lettres est ignorée lors de la détermination des couleurs des cases de lettres.
+  
+  Comme décrit ci-dessous, les environnements \keyword{wordle} et \keyword{GrilleSutom} acceptent une liste d'options différentes qui modifient les couleurs, les polices et les formes de la tuile. De plus, vous pouvez modifier la sensibilité à la casse des environnements, ajouter des lignes supplémentaires au puzzle, désactiver la mise en forme spéciale des \textit{cases de lettres}. Ces options sont données sous la forme d'une liste séparée par des virgules de paires \texttt{clé-valeur}. Elles peuvent être définies localement, en utilisant l'argument optionnel de l'environnement \keyword|wordle|, ou globalement (plus précisément, dans le groupe \LaTeX\ actuel) en utilisant la commande \keyword{\ParamsSutom} \index{\textbackslash ParamsSutom}, ou comme options globales du package, via \keyword{\usepackage[options]{wordle}}. L'ordre des options n'a pas d'importance, sauf que les options ultérieures ont priorité sur les options précédentes, à l'exception des clés \option{tikz} et \option{tile style} qui sont toujours appliquées en dernier.
+  
+  Les puzzles \keyword{wordle} sont dessinés à l'aide de \ctan{TikZ}, chaque lettre du puzzle étant placée à l'intérieur d'un nœud \ctan{TikZ}. De nombreuses options contrôlent les paramètres de ces nœuds. Les descriptions des options ci-dessous sont regroupées en fonction de leur fonction.
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Section{Styles Wordle}
+
+  La clé \option{Style} peut être utilisée pour modifier de nombreuses caractéristiques des cases dans un puzzle \keyword{wordle}, y compris leurs couleurs, les polices et ainsi de suite. Les paramètres les plus courants peuvent être définis à l'aide du mot-clé \option{style}. \textit{Le style doit toujours être défini en premier car, sinon, les paramètres de style peuvent remplacer les paramètres précédents.}
+  
+  Les styles suivants sont pris en charge : 
+
+  \textcolor{DarkOrange}{sutom}
+  \index{Style!sutom}
+  \index{sutom}
+
+  \begin{example}
+  \begin{wordle}[Style=sutom]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  En plus de définir les couleurs des cases, les cadres et les formes, le style \textsf{sutom} définit également la taille des cases à 8 mm. Le style \textsf{sutom} est le style par défaut pour l'environnement \keyword{GrilleSutom}.
+  
+  \textcolor{DarkOrange}{standard}
+  \index{style!standard}
+
+  \begin{example}
+  \begin{wordle}[Style=standard]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  Le style \textcolor{DarkOrange}{standard} est le style par défaut pour l'environnement \keyword{wordle}.
+
+  \textcolor{DarkOrange}{hard}
+  \index{style!hard}
+
+  \begin{example}
+  \begin{wordle}[Style=hard]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Section{Options pour les styles individuels des cases de lettres}
+  
+  Il existe quatre types de cases de lettres dans \keyword{wordle} :
+  \option{absent}, \option{present}, \option{correct} et
+  \option{vide}, correspondant respectivement aux lettres qui ne sont pas dans la solution,
+  aux lettres mal placées, aux lettres correctement placées et aux cases vides. Les options de cette section peuvent être utilisées pour
+  définir les couleurs du texte, des cases et des bordures, les formes et les cadres de ces cases.
+  
+  Les cases de lettres dans un environnement \keyword{wordle} sont composées à l'intérieur
+  d'un \keyword{\node} \ctan{TikZ}. Les options ci-dessous contrôlent les
+  différents paramètres de style de ces nœuds.
+  
+  \option[--]{Couleurs}[liste de couleurs valides séparées par des virgules]
+  
+  L'option \option{Couleurs} est un raccourci pour spécifier les
+  couleurs des cases \option{absent}, \option{present}, \option{correct} et
+  \option{vide}, dans cet ordre. Les couleurs suivantes peuvent être omises, mais
+  les couleurs doivent être données dans cet ordre, de gauche à droite.
+  Si une seule couleur est donnée, cette couleur est appliquée à toutes les cases.
+
+  \begin{example}
+  \begin{wordle}[Couleurs={LightGray,Orange,Teal}]{cellar}
+    pounds
+    taylor
+    cellar
+  \end{wordle}
+  \end{example}
+
+  Les couleurs peuvent également être définies individuellement à l'aide de \option{couleur absent}, \option{couleur present}, \option{couleur correct} et \option{couleur vide}.
+
+  \begin{example}
+  \begin{wordle}[couleur absent=DarkGray,couleur present=Salmon,
+                 couleur correct=SeaGreen]{cellar}
+    pounds
+    taylor
+    cellar
+  \end{wordle}
+  \end{example}
+
+  \option[white]{CouleurBordures}[liste de couleurs valides séparées par des virgules]
+
+  de manière similaire à l'option  \option{Couleurs}, il s'agit d'un raccourci pour le paramétrage des couleurs des bordures des cases \option{absent}, \option{present},
+  \option{correct} et \option{vide}, dans cet ordre.
+  
+  Si une seule couleur est donnée, elle est appliquée à toutes les cases.
+
+  \begin{example}
+  \begin{wordle}[CouleurBordures={red,orange,blue}]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  Les bordures pour les cases individuelles peuvent être paramétrer via 
+  \option{bordure absent}, \option{bordure present}, \option{bordure correct} et \option{bordure vide}.
+
+  \option[false]{Cadres}[liste de booléens true/false séparées par des virgules]
+
+  Il s'agit d'un raccourci pour ajouter un cadre autour des cases \option{absent}, \option{present}, \option{correct} et \option{vide}, dans cet ordre, avec la même couleur que \option{absent}. C'est utile uniquement pour les cases non carrée.
+
+  \begin{example}
+  \begin{wordle}[Cadres={false,true,true},Formes=circle]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  Les cadres pour les cases individuelles peuvent être paramétrer via \option{cadre absent}, \option{cadre present},
+  \option{cadre correct} and \option{cadre vide}.
+
+  \option[rectangle]{Formes}[liste de formes TikZ séparées par des virgules]
+
+  De même que pour l'option \option{Couleurs}, c'est un raccourci pour paramétrer les formes des cases \option{absent}, \option{present},
+  \option{correct} et \option{vide}, dans cet ordre.
+
+  \begin{example}
+  \begin{wordle}[Formes={circle, rectangle, circle}]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  Les formes individuelles peuvent être paramétrer via \option{forme absent}, \option{forme present},
+  \option{forme correct} et \option{forme vide}.
+  
+  Les formes proposés par le package \ctan{TikZ}
+  \texttt{shapes.geometric}, incluant \texttt{diamond},
+  \texttt{ellipse}, \texttt{trapezium} et \texttt{star} (voir section~71.2 du manuel \ctan{TikZ}).
+
+  \begin{example}
+  % \usepackage{shapes.geometric}
+  \begin{wordle}[Formes={diamond,ellipse,star}]{LADLE}
+     FLAIL
+     LAPEL
+     *
+     LADLE
+     LOVER
+  \end{wordle}
+  \end{example}
+
+  \option[white]{CouleurLettres}[liste de couleurs valides séparées par des virgules]
+
+  Il s'agir d'un raccourci pour paramétrer la couleur des lettres des cases   \option{absent}, \option{present}, \option{correct} et \option{vide}, dans cet ordre.
+
+  \begin{example}
+  \begin{wordle}[CouleurLettres={red,orange,blue}]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  Les cases individuelles peuvent être paramétrer via \option{coultxt absent}, \option{coultxt present}, \option{coultxt correct} et \option{coultxt vide}.
+
+
+  \Section{Caractéristiques communes des cases}
+
+  Les options suivantes s'appliquent à toutes les cases.
+
+  \option[]{nonalign} (default) \qquad
+  \option[]{align}
+
+  Cette option s'occupe de l'alignement vertical des lettres. C'est utile essentiellement lors de l'utilisation de minuscules.
+
+  \begin{example}
+  \begin{wordle}[align]{agony}
+     groan
+     angry
+     agony
+  \end{wordle}
+  \end{example}
+
+  \begin{example}
+  \begin{wordle}{agony} % nonalign par defaut
+    groan
+    angry
+    agony
+  \end{wordle}
+  \end{example}
+
+  \option[\textbackslash Large\textbackslash bfseries\textbackslash sffamily]{Police}
+       [Police \LaTeX]
+  
+  Cela permet de paramétrer la police de toutes les lettres. Toute commande valide est acceptée.
+
+  \begin{example}
+  \begin{wordle}[Police=\large\ttfamily]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  \option[1mm]{Arrondi}[une longueur]
+
+  Cela permet de paramétrer le paramètres \texttt{rounded corners} (de TikZ) pour les cases \keyword{wordle}.
+
+  \begin{example}
+  \begin{wordle}[Arrondi=2.5mm]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  \option[0.5mm]{Separation}[une longueur]
+
+  Cela permet de paramétrer la séparation entre les cases du \keyword{wordle}.
+
+  \begin{example}
+  \begin{wordle}[Separation=2mm,CouleurBordures=black]{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{wordle}
+  \end{example}
+
+  \option[1]{Echelle}[un nombre]
+
+  L'option \option{Echelle} applique un facteur à l'environnement \keyword{wordle}.
+  Cette option modifie les dimensions définies par les options \option{Arrondi},
+  \option{Separation}, \option{Taille} et \option{Epaisseur}. Si vous changez l'échelle, vous voudrez également changer la police de caractères via \option{Police} :
+
+  \begin{example}
+  \begin{wordle}[Echelle=1.5,Police=\huge\bfseries]{SIZE}
+     HELP
+     WISE
+     SIZE
+  \end{wordle}
+  \end{example}
+
+  \option[8mm]{Taille}[une longueur]
+
+  L'option \option{Taille} définit la taille des cases. Contrairement à l'option \option{Echelle}, \option{Taille} change uniquement la dimension des cases.
+
+  \begin{example}
+  \begin{wordle}[Taille=10mm,Police=\huge\bfseries]{REPU}
+     ABRI ROUE * REPU
+  \end{wordle}
+  \end{example}
+
+  \option[0.25mm]{Epaisseur}[une longueur]•
+
+  Cela permet de paramétrer la taille des bordures des cases. Par défaut la couleur est blanche, donc pour illustrer cette option elle sera paramétrer en rouge.
+
+  \begin{example}
+  \begin{wordle}[Epaisseur=0.75mm,CouleurBordures=red]{LADLE}
+     FLAIL
+     LAPEL
+     LADLE
+  \end{wordle}
+  \end{example}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Section{Lignes et colonnes supplémentaires}
+
+  Par défaut, le nombre de lignes et de colonnes de la grille est fixée par les mots donnés.
+
+  \option[]{Lettres} (défaut)\qquad
+  \option[]{NonLettres}
+
+  Par dafut, les lettres sont affichées, mais l'option \option{NonLettres} peuvent être cachées.
+
+  \begin{example}
+  \begin{wordle}{CRAZE} % the default
+    TRACE
+    CREAM
+    CRAZE
+  \end{wordle}
+  \end{example}
+
+  \begin{example}
+  \begin{wordle}[NonLettres]{CRAZE}
+    TRACE
+    CREAM
+    CRAZE
+  \end{wordle}
+  \end{example}
+
+  \option[false]{Strict}[true/false/--]
+
+  Par défaut, l'environnement ne vérifie pas si tous les mots sont la même taille, donc les lettres \textit{en trop} n'ont pas de style particulier.
+
+  \begin{example}
+  \begin{wordle}[Strict=false]{CRAZE} % par defaut
+    GRAIL
+    CRAMPS
+    CRAM
+    CRABS
+  \end{wordle}
+  \end{example}
+
+  L'option booléenne \option{Strict} force un style particulier des lettre \textit{en trop}.
+
+  \begin{example}
+  \begin{wordle}[Strict]{CRAZE}
+    GRAIL
+    CRAMPS
+    CRAM
+    CRABS
+  \end{wordle}
+  \end{example}
+
+  \option[--]{Lignes}
+
+  Par défaut, l'environnement \keyword{wordle} affiche le nombre de lignes en adéquation avec le nombre de mots donnés. L'option \option{Lignes} permet de modifier le nombre de lignes (évenuellement vides).
+
+  \begin{example}
+  \begin{wordle}[Lignes=4]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
+  \end{example}
+
+  \begin{example}
+  \begin{wordle}[Lignes=2]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
+  \end{example}
+
+  \option[]{*}
+
+  Le style des case peut être annulé en ajoutant un astérisque,~\option{*}, en tant que mot.
+
+  \begin{example}
+  \begin{wordle}{ANVIL}
+    CRANE
+    NATAL
+    *      % annule la mise en forme
+    ANNUL
+    ANVIL
+  \end{wordle}
+  \end{example}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Section{Sensibilité à la casse}
+  \index{case~sensitive}
+  \index{case~sensitive!lower case}
+  \index{case~sensitive!natural case}
+  \index{case~sensitive!upper case}
+
+  Par défaut, les lettres peuvent être écrites en majuscule ou en minuscule, comme saisies par l'utilisateur.
+  
+  L'option (voir doc en anglais) \option{case~sensitive} permet de spécifier un paramétrage de la casse.
+  
+  \begin{example}
+  \begin{wordle}[case sensitive=false]{youth} % par defaut
+    North
+    South
+    Youth
+  \end{wordle}
+  \end{example}
+
+  \begin{example}
+  \begin{wordle}[case sensitive]{youth}
+    North
+    South
+    Youth
+  \end{wordle}
+  \end{example}
+  
+  Les options \textit{fines} \option{natural case} (défaut), \option{lower case}et \option{upper case} permettent de travailler plus finement sur la casse des lettres correctes et/ou mal placées.
+  
+  \begin{example}
+  \begin{wordle}[lower case]{YOUTH}
+    North
+    South
+    Youth
+  \end{wordle}
+  \end{example}
+
+  \begin{example}
+  \begin{wordle}[upper case]{youth}
+    North
+    South
+    Youth
+  \end{wordle}
+  \end{example}
+
+  \begin{example}
+  \begin{wordle}[natural case]{youth} % par defaut
+    North
+    South
+    youth
+  \end{wordle}
+  \end{example}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Section{Style \ctan{TikZ} complémentaire}
+
+  \option[]{tikz}[commandes TikZ]
+  
+  \begin{example}
+  % \usetikzlibrary{backgrounds}
+  \begin{wordle}[
+      tikz={framed,
+            background rectangle/.style={
+              double,ultra thick, draw=SteelBlue
+            }
+      }]{youth}
+    North South youth
+  \end{wordle}
+  \end{example}
+
+  \pagebreak
+  
+  \option[W]{Nom}
+
+  \begin{example}
+  \begin{wordle}[tikz={remember picture}]{CRAZE}
+    TRACE
+    CREAM
+    CRAZE
+  \end{wordle}
+  \end{example}
+
+  \begin{example}
+  \tikz[remember picture]\draw[overlay, very thick, opacity=0.5,->,red](0,0)node{Pas de  M !!!} to [out=90, in=180](W-2-5);
+  \end{example}
+
+  \begin{example}
+  \begin{wordle}[name=M,
+        tikz={arr/.style={red,ultra thick,->}}
+      ]{MACAW}
+      [{
+        \draw[arr](M-1-3.south)--(M-3-2.north)--(M-4-2.north);
+        \draw[arr](M-1-1.south)--(M-3-5)--(M-4-3.north east);
+      }]
+    CRANE HOTLY BASIC MACAW
+  \end{wordle}
+  \end{example}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \Section{Le code}
+
+  Le package \keyword{wordle} est écrit en \LaTeX3.  Beaucoup de commentaires permettent d'expliciter le fonctionnement du code. La coloration automatique des cases est un exercice amusant en \LaTeX3, motivépar un message issu de 
+  \href{https://tex.stackexchange.com/questions/659860/wordle-like-colored-letter-boxes-in-latex/660056#660056}{tex.stackexchange.com}.
+
+  Le dépôt \href{https://github.com/AndrewMathas/Wordle}{github} est disponible pour signaler tout bug.
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \printindex
 
 \end{document}

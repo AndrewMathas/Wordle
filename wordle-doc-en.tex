@@ -1,3 +1,5 @@
+% !TeX TS-program = pdflatex
+
 \documentclass[svgnames]{report}
 \usepackage{wordle}
 \usepackage{manfnt}
@@ -21,7 +23,7 @@
         keywordstyle=\color{Sienna},
         commentstyle=\color{BurlyWood},
         tabsize=2,
-        morekeywords={Wordle,wordle, GrilleSutom},
+        morekeywords={Wordle,wordle,GrilleSutom},
         resetmargins=true,
 }
 % hyperref links to ctan
@@ -75,7 +77,7 @@
   },%
   classoffset=1,
   keywordstyle=\color{ForestGreen},%
-  morekeywords={wordle},
+  morekeywords={wordle,GrilleSutom},
   classoffset=2,
   keywordstyle=\color{Crimson},%
   morekeywords={
@@ -170,7 +172,7 @@
   \begin{tikzpicture}[remember picture,overlay]
       \node[yshift=-3cm] at (current page.north west)
         {\begin{tikzpicture}[remember picture, overlay]
-          \draw[shadowed](30mm,0) rectangle node[white]{Wordle} (\paperwidth-30mm,16mm);
+          \draw[shadowed](30mm,0) rectangle node[white]{wordle} (\paperwidth-30mm,16mm);
           \node[anchor=west,boxes] at (4cm,0cm) {\@author};
           \node[anchor=east,boxes] at (\paperwidth-4cm,0) {Version \wordle@version};
          \end{tikzpicture}
@@ -219,10 +221,10 @@
     listing style=tikz,
     boxsep = 0pt,
   }
-        % \usepackage{wordle}
-        \begin{wordle}[wordle settings]{solution}[optional tikz commands]
-          guess1 guess2 ...
-        \end{wordle}
+  % \usepackage{wordle}
+  \begin{wordle}[wordle settings]{solution}[optional tikz commands]
+    guess1 guess2 ...
+  \end{wordle}
   \end{tcblisting}
   \index{environment!wordle}
   \index{wordle}
@@ -239,10 +241,10 @@
     listing style=tikz,
     boxsep = 0pt,
   }
-        % \usepackage{wordle}
-        \begin{GrilleSutom}[sutom settings]{solution}[optional TikZ commands]
-          guess1 guess2 ...
-        \end{GrilleSutom}
+  % \usepackage{wordle}
+  \begin{GrilleSutom}[sutom settings]{solution}[optional TikZ commands]
+    guess1 guess2 ...
+  \end{GrilleSutom}
   \end{tcblisting}
   \index{environment!GrilleSutom}
   \index{GrilleSutom}
@@ -252,20 +254,20 @@
   lines.  Here are some examples:
 
   \begin{example}
-    \begin{wordle}{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   \begin{example}
-    % French version of the wordle (sutom)
-    \begin{GrilleSutom}{REBUS}
-        ABRIS
-        ROUTE
-        REBUS
-    \end{GrilleSutom}
+  % French version of the wordle (sutom)
+  \begin{GrilleSutom}{REBUS}
+    ABRIS
+    ROUTE
+    REBUS
+  \end{GrilleSutom}
   \end{example}
 
   As in the online puzzles, the \keyword{wordle} environment
@@ -280,11 +282,11 @@
   being constrained only by the page width.
 
   \begin{example}
-    \begin{wordle}[rows=4]{orange}
-       normal
-       orders
-       orange
-    \end{wordle}
+  \begin{wordle}[rows=4]{orange}
+     normal
+     orders
+     orange
+  \end{wordle}
   \end{example}
 
   The letters in the puzzle can be entered in upper case, lower case, or
@@ -329,11 +331,11 @@
   \index{sutom}
 
   \begin{example}
-    \begin{wordle}[style=sutom]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[style=sutom]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   In addition to setting the tile colours, frames and shapes, the
@@ -345,25 +347,25 @@
   \index{style!standard}
 
   \begin{example}
-    \begin{wordle}[style=standard]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[style=standard]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
-  The \textcolor{DarkOrange}{sutom} style is the default style for the
+  The \textcolor{DarkOrange}{standard} style is the default style for the
   \keyword{wordle} environment.
 
   \textcolor{DarkOrange}{hard}
   \index{style!hard}
 
   \begin{example}
-    \begin{wordle}[style=hard]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[style=hard]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -385,15 +387,15 @@
   The \option{colours} option is a short-hand for specifying the colours
   of the \option{absent}, \option{present}, \option{correct} and
   \option{empty} tiles, in that order. Later colours can be omitted but
-  the colours should be given in this order, from left to right, as a
+  the colours should be given in this order, from left to right.
   If only one colour is given then this colour is applied to all tiles.
 
   \begin{example}
-    \begin{wordle}[colours={LightGray,Orange,Teal}]{cellar}
-      pounds
-      taylor
-      cellar
-    \end{wordle}
+  \begin{wordle}[colours={LightGray,Orange,Teal}]{cellar}
+    pounds
+    taylor
+    cellar
+  \end{wordle}
   \end{example}
 
   The colours can also be set individually using \option{absent colour},
@@ -403,12 +405,12 @@
   \option{correct color} and \option{empty color}.
 
   \begin{example}
-    \begin{wordle}[absent colour=DarkGray,present color=Salmon,
-                   correct color=SeaGreen]{cellar}
-      pounds
-      taylor
-      cellar
-    \end{wordle}
+  \begin{wordle}[absent colour=DarkGray,present color=Salmon,
+                 correct color=SeaGreen]{cellar}
+    pounds
+    taylor
+    cellar
+  \end{wordle}
   \end{example}
 
   \option[white]{borders}[comma separated list of valid colours]
@@ -419,11 +421,11 @@
   If only one colour is given then this colour is applied to all tiles.
 
   \begin{example}
-    \begin{wordle}[borders={red, orange,blue}]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[borders={red, orange,blue}]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   You can set the border borders of the individual tiles using
@@ -438,11 +440,11 @@
   \option{absent} file. This is only useful for non-square tiles.
 
   \begin{example}
-    \begin{wordle}[frames={false,true,true}, shapes=circle]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[frames={false,true,true}, shapes=circle]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   You can set the frames of the individual tiles using
@@ -456,11 +458,11 @@
   \option{correct} and \option{empty} tiles, in that order.
 
   \begin{example}
-    \begin{wordle}[shapes={circle, rectangle, circle}]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[shapes={circle, rectangle, circle}]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   You can set the shape shapes of the individual tiles using
@@ -472,14 +474,14 @@
   section~71.2 of the \ctan{TikZ} manual.
 
   \begin{example}
-    % \usepackage{shapes.geometric}
-    \begin{wordle}[shapes={diamond, ellipse, star}]{LADLE}
-       FLAIL
-       LAPEL
-       *
-       LADLE
-       LOVER
-    \end{wordle}
+  % \usepackage{shapes.geometric}
+  \begin{wordle}[shapes={diamond, ellipse, star}]{LADLE}
+     FLAIL
+     LAPEL
+     *
+     LADLE
+     LOVER
+  \end{wordle}
   \end{example}
 
   \option[white]{text}[comma separated list of valid colours]
@@ -489,11 +491,11 @@
   tiles, in that order.
 
   \begin{example}
-    \begin{wordle}[text={red, orange,blue}]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[text={red, orange,blue}]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   You can set the text borders of the individual tiles using
@@ -513,19 +515,19 @@
   letters in your puzzle.
 
   \begin{example}
-    \begin{wordle}[align]{agony}
-       groan
-       angry
-       agony
-    \end{wordle}
+  \begin{wordle}[align]{agony}
+     groan
+     angry
+     agony
+  \end{wordle}
   \end{example}
 
   \begin{example}
-    \begin{wordle}[noalign]{agony} % the default
-      groan
-      angry
-      agony
-    \end{wordle}
+  \begin{wordle}[noalign]{agony} % the default
+    groan
+    angry
+    agony
+  \end{wordle}
   \end{example}
 
   \option[\textbackslash Large\textbackslash bfseries\textbackslash sffamily]{font}
@@ -535,11 +537,11 @@
   of \LaTeX\ font commands can be used.
 
   \begin{example}
-    \begin{wordle}[font=\large\sffamily]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[font=\large\sffamily]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   \option[1mm]{rounded}[a length]
@@ -547,24 +549,24 @@
   Set TikZ \texttt{rounded corners} key for the \keyword{wordle} letter tiles.
 
   \begin{example}
-    \begin{wordle}[rounded=2mm]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[rounded=2mm]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
-  \option[1mm]{separation}[a length]
+  \option[0.5mm]{separation}[a length]
 
   Sets the separation distance between the \keyword{wordle} letter
   tiles.
 
   \begin{example}
-    \begin{wordle}[separation=2mm, borders=black]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[separation=2mm, borders=black]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   \option[1]{scale}[a number]
@@ -577,11 +579,11 @@
   \option{font} option:
 
   \begin{example}
-    \begin{wordle}[scale=1.5, font=\huge\bfseries]{SIZE}
-       HELP
-       WISE
-       SIZE
-    \end{wordle}
+  \begin{wordle}[scale=1.5, font=\huge\bfseries]{SIZE}
+     HELP
+     WISE
+     SIZE
+  \end{wordle}
   \end{example}
 
   \option[7.0mm]{size}[a length]
@@ -592,9 +594,9 @@
   default size is \textcolor{FireBrick}{10mm}.
 
   \begin{example}
-    \begin{wordle}[size=10mm, font=\huge\bfseries]{LADLE}
-       FLAIL LAPEL * LADLE
-    \end{wordle}
+  \begin{wordle}[size=10mm, font=\huge\bfseries]{LADLE}
+     FLAIL LAPEL * LADLE
+  \end{wordle}
   \end{example}
 
   \option[0.25mm]{thickness}[a length]
@@ -604,11 +606,11 @@
   hard to see, so the following example changes the border to red.
 
   \begin{example}
-    \begin{wordle}[thickness=1mm, borders=red]{LADLE}
-       FLAIL
-       LAPEL
-       LADLE
-    \end{wordle}
+  \begin{wordle}[thickness=1mm, borders=red]{LADLE}
+     FLAIL
+     LAPEL
+     LADLE
+  \end{wordle}
   \end{example}
 
   \option[--]{tile style}[comma separated list of TikZ style keys]
@@ -627,11 +629,11 @@
   % TODO: Fix this because it looks like this style is being applied
   % twice because the PDF file shows a rotation of 90 = 2*45...
   \begin{example}
-    \begin{wordle}[tile style={rotate=45}]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[tile style={rotate=45}]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -651,19 +653,19 @@
   colouring, using \option{noletters}.
 
   \begin{example}
-    \begin{wordle}[letters]{CRAZE} % the default
-      TRACE
-      CREAM
-      CRAZE
-    \end{wordle}
+  \begin{wordle}[letters]{CRAZE} % the default
+    TRACE
+    CREAM
+    CRAZE
+  \end{wordle}
   \end{example}
 
   \begin{example}
-    \begin{wordle}[noletters]{CRAZE}
-      TRACE
-      CREAM
-      CRAZE
-    \end{wordle}
+  \begin{wordle}[noletters]{CRAZE}
+    TRACE
+    CREAM
+    CRAZE
+  \end{wordle}
   \end{example}
 
   \option[false]{strict}[true/false/--]
@@ -673,24 +675,24 @@
   and extra letters receive no special processing.
 
   \begin{example}
-    \begin{wordle}[strict=false]{CRAZE} % the default
-      GRAIL
-      CRAMPS
-      CRAM
-      CRABS
-    \end{wordle}
+  \begin{wordle}[strict=false]{CRAZE} % the default
+    GRAIL
+    CRAMPS
+    CRAM
+    CRABS
+  \end{wordle}
   \end{example}
 
   The \option{strict} option enforces the word length in the puzzle by
   marking missing letters as incorrect and striking out extra letters.
 
   \begin{example}
-    \begin{wordle}[strict]{CRAZE}
-      GRAIL
-      CRAMPS
-      CRAM
-      CRABS
-    \end{wordle}
+  \begin{wordle}[strict]{CRAZE}
+    GRAIL
+    CRAMPS
+    CRAM
+    CRABS
+  \end{wordle}
   \end{example}
 
   \option[--]{rows}
@@ -700,11 +702,11 @@
   (blank) rows to the puzzle with the \option{rows} option.
 
   \begin{example}
-    \begin{wordle}[rows=4]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[rows=4]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
   The \option{rows} option only adds extra rows to the puzzle if they
@@ -712,11 +714,11 @@
   appearing.
 
   \begin{example}
-    \begin{wordle}[rows=2]{ANVIL}
-      CRANE
-      NATAL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}[rows=2]{ANVIL}
+    CRANE
+    NATAL
+    ANVIL
+  \end{wordle}
   \end{example}
 
 
@@ -727,13 +729,13 @@
   \textit{word}, into the puzzle.
 
   \begin{example}
-    \begin{wordle}{ANVIL}
-      CRANE
-      NATAL
-      *      % disable wordle colouring
-      ANNUL
-      ANVIL
-    \end{wordle}
+  \begin{wordle}{ANVIL}
+    CRANE
+    NATAL
+    *      % disable wordle colouring
+    ANNUL
+    ANVIL
+  \end{wordle}
   \end{example}
 
 
@@ -756,21 +758,21 @@
   \keyword{case sensitive=false}).
 
   \begin{example}
-    \begin{wordle}[case sensitive=false]{youth} % the default
-      North
-      South
-      Youth
-    \end{wordle}
+  \begin{wordle}[case sensitive=false]{youth} % the default
+    North
+    South
+    Youth
+  \end{wordle}
   \end{example}
 
   Here is a case sensitive version of this puzzle.
 
   \begin{example}
-    \begin{wordle}[case sensitive]{youth}
-      North
-      South
-      Youth
-    \end{wordle}
+  \begin{wordle}[case sensitive]{youth}
+    North
+    South
+    Youth
+  \end{wordle}
   \end{example}
 
   As this puzzle is case sensitive, the \keyword{Y} on the last line is
@@ -785,19 +787,19 @@
   letters in the puzzle to be in lower or upper case, respectively.
 
   \begin{example}
-    \begin{wordle}[lower case]{YOUTH}
-      North
-      South
-      Youth
-    \end{wordle}
+  \begin{wordle}[lower case]{YOUTH}
+    North
+    South
+    Youth
+  \end{wordle}
   \end{example}
 
   \begin{example}
-    \begin{wordle}[upper case]{youth}
-      North
-      South
-      Youth
-    \end{wordle}
+  \begin{wordle}[upper case]{youth}
+    North
+    South
+    Youth
+  \end{wordle}
   \end{example}
 
   As these examples show, both of these options disable the case
@@ -810,11 +812,11 @@
   not change the \option{case sensitive} setting.
 
   \begin{example}
-    \begin{wordle}[natural case]{youth} % the default
-      North
-      South
-      youth
-    \end{wordle}
+  \begin{wordle}[natural case]{youth} % the default
+    North
+    South
+    youth
+  \end{wordle}
   \end{example}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -838,15 +840,15 @@
   applied.
 
   \begin{example}
-    % \usetikzlibrary{backgrounds}
-    \begin{wordle}[
-        tikz={framed,
-              background rectangle/.style={
-                double,ultra thick, draw=SteelBlue
-              }
-        }]{youth}
-      North South youth
-    \end{wordle}
+  % \usetikzlibrary{backgrounds}
+  \begin{wordle}[
+      tikz={framed,
+            background rectangle/.style={
+              double,ultra thick, draw=SteelBlue
+            }
+      }]{youth}
+    North South youth
+  \end{wordle}
   \end{example}
 
   As this example indicates, it is advisable to enclose complicated
@@ -865,18 +867,18 @@
   \ctan{TikZ} \texttt{overlay} and \texttt{remember picture} keys:
 
   \begin{example}
-    \begin{wordle}[tikz={remember picture}]{CRAZE}
-      TRACE
-      CREAM
-      CRAZE
-    \end{wordle}
+  \begin{wordle}[tikz={remember picture}]{CRAZE}
+    TRACE
+    CREAM
+    CRAZE
+  \end{wordle}
   \end{example}
 
   This makes it possible, for example, to draw arrows to tiles in a
   \keyword{wordle} puzzle:
 
   \begin{example}
-    \tikz[remember picture]\draw[overlay, very thick, opacity=0.5,->,red](0,0)node{No M!} to [out=90, in=180](W-2-5);
+  \tikz[remember picture]\draw[overlay, very thick, opacity=0.5,->,red](0,0)node{No M!} to [out=90, in=180](W-2-5);
   \end{example}
 
   A second use of the tile node names is in conjunction with \ctan{TikZ}
@@ -886,15 +888,15 @@
   inside braces.
 
   \begin{example}
-    \begin{wordle}[name=M,
-          tikz={arr/.style={Red,ultra thick,->}}
-        ]{MACAW}
-        [{
-          \draw[arr](M-1-3.south)--(M-3-2.north)--(M-4-2.north);
-          \draw[arr](M-1-1.south)--(M-3-5)--(M-4-3.north east);
-        }]
-      CRANE HOTLY BASIC MACAW
-    \end{wordle}
+  \begin{wordle}[name=M,
+        tikz={arr/.style={Red,ultra thick,->}}
+      ]{MACAW}
+      [{
+        \draw[arr](M-1-3.south)--(M-3-2.north)--(M-4-2.north);
+        \draw[arr](M-1-1.south)--(M-3-5)--(M-4-3.north east);
+      }]
+    CRANE HOTLY BASIC MACAW
+  \end{wordle}
   \end{example}
 
   In practice, we are not convinced that anyone will find a real use for this!
