@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+
+# Create tar file for uploading wordle package to ctan
+
+CTANIFY="ctanify -p wordle -nos"
+
+TAR=$(tar --version)
+GTAR=$(gtar --version)
+
+if [[ "$TAR" != "$GTAR" ]]
+then
+  # use gnu-tar because tar on macosx adds spurious system files
+  echo "WARNING: tar is not gnu-tar!"
+fi
+
+# create the tar file for ctan
+$CTANIFY wordle.sty wordle-doc-*.{tex,pdf} README.md LICENSE
