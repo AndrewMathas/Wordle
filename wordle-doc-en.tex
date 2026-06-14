@@ -54,16 +54,15 @@
 
 \DeclareTotalTCBox\keyword{ O{} v }{
   fontupper=\sffamily,
-  nobeforeafter,
   skin=tile,
   verbatim,
   on line,
-  tcbox raise base,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
+  top=-0.25pt,bottom=-0.25pt,left=0mm,right=0mm,
   colback=OldLace,
   colupper=ForestGreen,
   #1}
-{#2}
+{\detokenize{#2}}
+
 
 \lstdefinestyle{tikz}{style=tcblatex,
   classoffset=0,
