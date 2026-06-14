@@ -1,6 +1,7 @@
 ![version](https://img.shields.io/github/v/tag/AndrewMathas/wordle?color=success&label=version)
-<a href="http://www.latex-project.org/lppl.txt"><img src="https://img.shields.io/badge/license-LPPLv1.3c-blueviolet.svg"></a>
-<a href="https://www.latex-project.org/"><img src="https://img.shields.io/badge/latex-20B2AA?logo=Latex"></a>
+![LPPL](https://img.shields.io/github/license/note286/xduts?style=flat-square)
+![CTAN](https://img.shields.io/ctan/v/wordle?color=blue&link=https://ctan.org/pkg/atableau)
+![LaTeX](https://img.shields.io/badge/LaTeX-008080?logo=latex&logoColor=fff&style=flat)
 
 # Wordle
 
