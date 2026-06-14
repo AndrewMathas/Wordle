@@ -11,7 +11,7 @@
 \parindent=0pt
 \parskip=2mm
 
-\usepackage{cmap} % fix search and cut-and-paste in Acrobat
+\usepackage[T1]{fontenc} % precomposed glyphs, so diacritics copy correctly from the PDF
 \setcounter{secnumdepth}{0}
 
 \usepackage{listings}\lstset{language=[LaTeX]TeX,framerule=2pt}
@@ -231,7 +231,7 @@
   \index{wordle}
 
   and the \keyword{GrilleSutom} environment, for \keyword{Sutom}, the French version of
-  the games:
+  the game:
 
   \begin{tcblisting}{
     listing only,
@@ -251,7 +251,7 @@
   \index{GrilleSutom}
   \index{sutom}
 
-  The words in the puzzle can be entered on a single lines, or on separate
+  The words in the puzzle can be entered on a single line, or on separate
   lines.  Here are some examples:
 
   \begin{example}
@@ -301,18 +301,18 @@
 
   As described below, the \keyword{wordle} and \keyword{GrilleSutom}
   environments accept an array of different options that change the
-  colours, fonts, and shapes of the tile. In addition, you can the case
-  sensitivity of the environments, add extra rows to the puzzle, disable
-  special formatting of the \textit{letter tiles}.  These options are
-  given as a comma separated list key-value pairs.  They can be set
-  locally, using the optional argument of the \keyword|wordle|
-  environment, or they can be set globally (more accurately, in the
-  current \LaTeX\ group) using the \keyword{\WordleSetup} command
-  \index{\textbackslash WordleSetup}, or as global package options, via
-  \keyword{\usepackage[options]{wordle}}.  The order of the options does
-  not matter, except that later options take precedence over earlier
-  ones, with the exception of \option{tikz} and \option{tile style} keys
-  which are always applied last.
+  colours, fonts, and shapes of the tile. In addition, you can change
+  whether the package environments are case sensitive, add extra rows to the
+  puzzle, disable special formatting of the \textit{letter tiles}.
+  These options are given as a comma separated list of key-value pairs.
+  They can be set locally, using the optional argument of the
+  \keyword|wordle| environment, or they can be set globally (more
+  accurately, in the current \LaTeX\ group) using the
+  \keyword{\WordleSetup} command \index{\textbackslash WordleSetup}, or
+  as global package options, via \keyword{\usepackage[options]{wordle}}.
+  The order of the options does not matter, except that later options
+  take precedence over earlier ones, with the exception of \option{tikz}
+  and \option{tile style} keys which are always applied last.
 
   The \keyword{wordle} puzzles are drawn using \ctan{TikZ}, with each
   letter in the puzzle sitting inside a \ctan{TikZ} node. Many of the
@@ -321,12 +321,18 @@
   The descriptions of the options below are grouped according to their
   function.
 
+  Most options have both an English and a French name (for example,
+  \option{rows} and \option{Lignes}, or \option{colours} and
+  \option{Couleurs}). The two names are interchangeable and either can be
+  used in either the \keyword{wordle} or the \keyword{GrilleSutom}
+  environment, irrespective of the language of the puzzle.
+
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \Section{Wordle styles}
 
   The \option{style} key can be used to change many characteristics of
   the tiles in a \keyword{wordle} puzzle, including their colours, the
-  fonts and so on.  The more common settings can be setting using the
+  fonts and so on.  The more common settings can be set using the
   \option{style} keyword. \textit{The style should always be set first
   because, otherwise, the style settings may override earlier settings.}
 
@@ -404,7 +410,7 @@
 
   The colours can also be set individually using \option{absent colour},
   \option{present colour}, \option{correct colour} and \option{empty
-  colour}.  To support north American dialects, is also possible to use
+  colour}.  To support North American dialects, it is possible to use
   \option{colors}, \option{absent color}, \option{present color},
   \option{correct color} and \option{empty color}.
 
@@ -432,16 +438,16 @@
   \end{wordle}
   \end{example}
 
-  You can set the border borders of the individual tiles using
-  \option{absent border}, \option{present border}, \option{correct
-  border} and \option{empty border}
+  You can set the borders of the individual tiles using
+  \option{absent border}, \option{present border},
+  \option{correct border} and \option{empty border}
 
   \option[false]{frames}[comma separated list of true/false]
 
   This is a short-hand for adding a rectangular frame around the
   \option{absent}, \option{present}, \option{correct} and \option{empty}
   tiles, in that order, with the same background colour as the
-  \option{absent} file. This is only useful for non-square tiles.
+  \option{absent} tile. This is only useful for non-square tiles.
 
   \begin{example}
   \begin{wordle}[frames={false,true,true}, shapes=circle]{ANVIL}
@@ -457,8 +463,8 @@
 
   \option[rectangle]{shapes}[comma separated list of TikZ shapes]
 
-  Similar to the \option{colours} option, this is a short-hand for the
-  setting shape colour of the \option{absent}, \option{present},
+  Similar to the \option{colours} option, this is a short-hand for
+  setting shapes of the \option{absent}, \option{present},
   \option{correct} and \option{empty} tiles, in that order.
 
   \begin{example}
@@ -490,7 +496,7 @@
 
   \option[white]{text}[comma separated list of valid colours]
 
-  This is a short-hand for the setting the text colours of the
+  This is a short-hand for setting the text colours of the
   \option{absent}, \option{present}, \option{correct} and \option{empty}
   tiles, in that order.
 
@@ -576,7 +582,7 @@
   \option[1]{scale}[a number]
 
   The \option{scale} option rescales the \keyword{wordle} environment.
-  The \option{scale} alters the dimensions sets by the \option{rounded},
+  The \option{scale} alters the different dimensions set by the \option{rounded},
   \option{separation} \option{size} and \option{thickness}  options.  If
   you change the scale, then you will almost certainly want
   to change font size font as well, which you can do using the
@@ -644,7 +650,7 @@
 
   By default, all of the words in a \keyword{wordle} puzzle are assumed
   to have the same number of letters as the solution, and the number of
-  rows in the puzzle is number of words given in the environment. The
+  rows in the puzzle is the number of words given in the environment. The
   options below give more control over the number of rows and columns in
   the puzzle.
 
@@ -809,9 +815,9 @@
   sensitivity of the tests for colouring the \keyword{wordle} tiles;
   that is, they set \option{case sensitive=false}.  To balance the
   \option{lower case} and \option{upper case} options, the
-  \option{natural case} option makes the \keyword{wordle} environment
-  restores the default behaviour, which respects the case of the letters
-  as typed into the environment. The \option{natural case} option does
+  \option{natural case} option restores the \keyword{wordle} environment
+  the default behaviour, which respects the case of the letters
+  as they typed into the environment. The \option{natural case} option does
   not change the \option{case sensitive} setting.
 
   \begin{example}
@@ -837,7 +843,7 @@
   \keyword{tikzpicture} environment. The \option{tikz} option is almost
   the same as using a \keyword{\tikzset{...}} command before the
   \keyword{wordle} environment except that it is applied to the
-  \keyword{tikpicture} environment, which contains the \keyword{wordle}
+  \keyword{tikzpicture} environment, which contains the \keyword{wordle}
   puzzle, such that the \option{tikz} keys are applied \textit{after}
   all of options above and \textit{before} \option{tile style} is
   applied.
